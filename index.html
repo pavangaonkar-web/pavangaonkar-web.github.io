@@ -10,8 +10,8 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #121212;
-            color: #ffffff;
+            background-color: #f5f5f5;
+            color: #333;
             text-align: center;
             scroll-behavior: smooth;
         }
@@ -30,10 +30,10 @@
         h1 {
             position: relative;
             z-index: 1;
-            background: rgba(0, 0, 0, 0.7);
             display: inline-block;
             padding: 10px 20px;
             border-radius: 10px;
+            color: #fff;
         }
         nav ul {
             list-style: none;
@@ -59,64 +59,36 @@
         .content {
             padding: 50px;
         }
-        .section {
-            display: none;
-            padding: 20px;
-            background: #1e1e1e;
-            border-radius: 10px;
-            margin: 20px auto;
-            width: 80%;
-            box-shadow: 0px 4px 6px rgba(255, 255, 255, 0.1);
-            transition: all 0.5s ease-in-out;
-        }
-        .section h2 {
-            color: #00bcd4;
-        }
-        .section p {
-            font-size: 16px;
-        }
-        .projects-grid {
+        .about-container {
             display: flex;
-            flex-wrap: wrap;
+            align-items: flex-start;
             justify-content: center;
-            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: left;
         }
-        .project-item {
-            background: #282828;
-            padding: 15px;
+        .about-container img {
+            width: 200px;
+            height: auto;
             border-radius: 10px;
-            transition: transform 0.3s;
-            cursor: pointer;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+            margin-right: 20px;
         }
-        .project-item:hover {
-            transform: scale(1.05);
-            background: #00bcd4;
-            color: #121212;
-        }
-        .resume-btn {
-            display: inline-block;
-            padding: 10px 20px;
-            margin-top: 20px;
-            background: #00bcd4;
-            color: #121212;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 5px;
-            transition: background 0.3s, transform 0.2s;
-        }
-        .resume-btn:hover {
-            background: #0288a3;
-            transform: scale(1.1);
-        }
-        .resume-btn:active {
-            transform: scale(0.95);
+        .about-text {
+            flex: 1;
         }
         @media (max-width: 768px) {
-            .section {
-                width: 90%;
+            .about-container {
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
             }
-            header {
-                padding: 30px 10px;
+            .about-container img {
+                width: 150px;
+                margin: 0 0 20px 0;
+            }
+            .about-text {
+                text-align: center;
             }
         }
     </style>
@@ -147,16 +119,16 @@
     <div class="content">
         <div id="about" class="section">
             <h2>About Me</h2>
-            <p>Welcome to my website! I am Pavan Gaonkar, passionate about physics and research.</p>
-            <a href="resume.pdf" class="resume-btn" download>Download Resume</a>
+            <div class="about-container">
+                <img src="profile.jpg" alt="Pavan Gaonkar">
+                <div class="about-text">
+                    <p>Welcome to my website! I am Pavan Gaonkar, passionate about physics and research.</p>
+                </div>
+            </div>
         </div>
         <div id="projects" class="section">
             <h2>Projects</h2>
-            <div class="projects-grid">
-                <div class="project-item">Project 1</div>
-                <div class="project-item">Project 2</div>
-                <div class="project-item">Project 3</div>
-            </div>
+            <p>Coming soon!</p>
         </div>
         <div id="blog" class="section">
             <h2>Blog</h2>
