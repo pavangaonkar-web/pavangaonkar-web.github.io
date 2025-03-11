@@ -13,6 +13,7 @@
             background-color: #121212;
             color: #ffffff;
             text-align: center;
+            scroll-behavior: smooth;
         }
         header {
             background: url('https://cdn.mos.cms.futurecdn.net/eToSsNm65xFUUJSLsz6Lm4.gif') no-repeat center center/cover;
@@ -49,10 +50,11 @@
             text-decoration: none;
             font-size: 18px;
             cursor: pointer;
-            transition: color 0.3s;
+            transition: color 0.3s, transform 0.2s;
         }
         nav a:hover {
             color: #00bcd4;
+            transform: scale(1.1);
         }
         .content {
             padding: 50px;
@@ -65,12 +67,49 @@
             margin: 20px auto;
             width: 80%;
             box-shadow: 0px 4px 6px rgba(255, 255, 255, 0.1);
+            transition: all 0.5s ease-in-out;
         }
         .section h2 {
             color: #00bcd4;
         }
         .section p {
             font-size: 16px;
+        }
+        .projects-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .project-item {
+            background: #282828;
+            padding: 15px;
+            border-radius: 10px;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        .project-item:hover {
+            transform: scale(1.05);
+            background: #00bcd4;
+            color: #121212;
+        }
+        .resume-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background: #00bcd4;
+            color: #121212;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .resume-btn:hover {
+            background: #0288a3;
+            transform: scale(1.1);
+        }
+        .resume-btn:active {
+            transform: scale(0.95);
         }
         @media (max-width: 768px) {
             .section {
@@ -100,6 +139,7 @@
             <ul>
                 <li><a onclick="showSection('about')">About</a></li>
                 <li><a onclick="showSection('projects')">Projects</a></li>
+                <li><a onclick="showSection('blog')">Blog</a></li>
                 <li><a onclick="showSection('contact')">Contact</a></li>
             </ul>
         </nav>
@@ -108,10 +148,19 @@
         <div id="about" class="section">
             <h2>About Me</h2>
             <p>Welcome to my website! I am Pavan Gaonkar, passionate about physics and research.</p>
+            <a href="resume.pdf" class="resume-btn" download>Download Resume</a>
         </div>
         <div id="projects" class="section">
             <h2>Projects</h2>
-            <p>Here are some of the projects I have worked on. (Details will be updated soon.)</p>
+            <div class="projects-grid">
+                <div class="project-item">Project 1</div>
+                <div class="project-item">Project 2</div>
+                <div class="project-item">Project 3</div>
+            </div>
+        </div>
+        <div id="blog" class="section">
+            <h2>Blog</h2>
+            <p>Coming soon! Stay tuned for exciting posts.</p>
         </div>
         <div id="contact" class="section">
             <h2>Contact</h2>
@@ -120,5 +169,4 @@
     </div>
 </body>
 </html>
-
 
