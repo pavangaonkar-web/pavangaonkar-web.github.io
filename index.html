@@ -81,53 +81,13 @@
             font-weight: 500;
             text-align: left;
         }
-        .blog-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        .blog-thumbnail {
-            width: 300px;
-            padding: 20px;
-            background: #fff;
-            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            text-align: center;
-            transition: transform 0.3s ease-in-out;
-            animation: floatUpDown 3s infinite ease-in-out;
-        }
-        .blog-thumbnail:hover {
-            transform: scale(1.05);
-        }
-        .blog-thumbnail img {
-            width: 100%;
-            border-radius: 10px;
-        }
-        .blog-thumbnail p {
-            margin-top: 10px;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        @keyframes floatUpDown {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-5px);
-            }
-        }
         @media (max-width: 768px) {
             .about-container {
-                text-align: center;
+                text-align: left;
                 align-items: center;
             }
             .about-text {
-                text-align: center;
-            }
-            .blog-container {
-                flex-direction: column;
-                align-items: center;
+                text-align: left;
             }
         }
     </style>
@@ -161,10 +121,25 @@
                 <img src="profile.jpg" alt="Pavan Gaonkar">
                 <div class="about-text">
                     <p>Hey, I’m Pavan Gaonkar! I developed an interest in physics despite the best efforts of my teachers. My curiosity about how the universe operates at its most fundamental level has led me to explore areas like quantum mechanics and general relativity (GTR). Although I haven’t studied GTR yet, I plan to dive into it soon.</p>
-                    <p>Recently, I’ve also started developing a fascination for pure mathematics. What truly amazes me is how abstract mathematical concepts—ones that seem completely disconnected from reality, like linear algebra and differential geometry—end up having profound applications in physics. Take linear algebra, for instance. If you read Linear Algebra Done Right, you might wonder how such abstract ideas could ever be useful. But once you encounter quantum mechanics, you realize that without linear algebra, constructing quantum theory would be nearly impossible...</p>
+                    <p>Recently, I’ve also started developing a fascination for pure mathematics. What truly amazes me is how abstract mathematical concepts—ones that seem completely disconnected from reality, like linear algebra and differential geometry—end up having profound applications in physics. Take linear algebra, for instance. If you read Linear Algebra Done Right, you might wonder how such abstract ideas could ever be useful. But once you encounter quantum mechanics, you realize that without linear algebra, constructing quantum theory would be nearly impossible.</p>
+                    <p>I recently completed my undergraduate studies at Karnataka University, Dharwad, India. I love discussing deep ideas about the universe—even with people who may not share the same enthusiasm.</p>
+                    <p>Beyond physics, I enjoy reading S. L. Bhyrappa’s novels, which offer profound insights into Indian philosophy and life. I also used to play ball badminton (BBT), though I no longer have the equipment or people to play with. One habit that remains unchanged, however, is my love for stargazing—I watch the stars every night because they are truly mesmerizing.</p>
+                    <p>My long-term goal is to contribute original ideas to physics and possibly pursue a career in theoretical physics or academia.</p>
+                    <p>If you share a passion for physics, mathematics, philosophy, or the mysteries of the cosmos, I’d love to connect and exchange ideas!</p>
                 </div>
             </div>
+        </div>
+        <div id="blog" class="section" style="display: none;">
+            <h2>Blog</h2>
+            <p>Welcome to my blog where I share my thoughts on physics and mathematics.</p>
+            <p><a href="spin_article.html">Understanding Spin in Quantum Mechanics</a></p>
+        </div>
+        <div id="contact" class="section" style="display: none;">
+            <h2>Contact</h2>
+            <p>Feel free to reach out to me at my email: pavangaonkar109@gmail.com</p>
+            <p><a href="https://www.linkedin.com/in/pavan-gaonkar-07a0972bb/">Connect with me on LinkedIn</a></p>
         </div>
     </div>
 </body>
 </html>
+
