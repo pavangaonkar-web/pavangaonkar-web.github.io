@@ -128,6 +128,7 @@
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.5s forwards;
+            display: none;
         }
 
         /* About Section */
@@ -170,68 +171,25 @@
             margin-top: 30px;
         }
 
-        .project-card {
+        .empty-state {
             background: var(--card-bg);
             border-radius: 10px;
-            overflow: hidden;
+            padding: 30px;
+            text-align: center;
             box-shadow: var(--shadow);
-            transition: var(--transition);
+            grid-column: 1 / -1;
         }
 
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        }
-
-        .project-img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-        }
-
-        .project-content {
-            padding: 20px;
-        }
-
-        .project-title {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-            color: var(--text);
-        }
-
-        .project-desc {
+        .empty-state p {
             color: #666;
+            font-size: 1.1rem;
             margin-bottom: 15px;
         }
 
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .tag {
-            background: rgba(0, 188, 212, 0.1);
+        .empty-icon {
+            font-size: 3rem;
             color: var(--primary);
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-        }
-
-        .project-link {
-            display: inline-block;
-            padding: 8px 15px;
-            background: var(--primary);
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .project-link:hover {
-            background: var(--primary-dark);
+            margin-bottom: 15px;
         }
 
         /* Blog Section */
@@ -240,57 +198,6 @@
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
             margin-top: 20px;
-        }
-
-        .blog-card {
-            background: var(--card-bg);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .blog-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        }
-
-        .blog-img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-        }
-
-        .blog-content {
-            padding: 20px;
-        }
-
-        .blog-date {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-        }
-
-        .blog-title {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-            color: var(--text);
-        }
-
-        .blog-excerpt {
-            color: #666;
-            margin-bottom: 15px;
-        }
-
-        .read-more {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .read-more:hover {
-            color: var(--primary-dark);
         }
 
         /* Contact Section */
@@ -418,10 +325,6 @@
                 padding: 0 20px;
             }
             
-            .project-title, .blog-title {
-                font-size: 1.2rem;
-            }
-            
             .about-text {
                 font-size: 1rem;
             }
@@ -454,18 +357,6 @@
             }
         }
     </style>
-    <script>
-        function showSection(id) {
-            document.querySelectorAll('.section').forEach(section => {
-                section.style.display = 'none';
-            });
-            document.getElementById(id).style.display = 'block';
-        }
-        
-        window.onload = function() {
-            showSection('about');
-        };
-    </script>
 </head>
 <body>
     <header>
@@ -473,10 +364,10 @@
             <h1>Pavan Gaonkar</h1>
             <nav>
                 <ul>
-                    <li><a onclick="showSection('about')">About</a></li>
-                    <li><a onclick="showSection('projects')">Projects</a></li>
-                    <li><a onclick="showSection('blog')">Blog</a></li>
-                    <li><a onclick="showSection('contact')">Contact</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#projects" class="nav-link">Projects</a></li>
+                    <li><a href="#blog" class="nav-link">Blog</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
                 </ul>
             </nav>
         </div>
@@ -485,6 +376,10 @@
     <div class="content">
         <!-- About Section -->
         <div id="about" class="section">
+            <div class="section-header">
+                <h2 class="section-title">About Me</h2>
+                <p class="section-desc">Physics enthusiast and aspiring theoretical physicist</p>
+            </div>
             <div class="about-container">
                 <div class="profile-img-container">
                     <img src="profile.jpg" alt="Pavan Gaonkar">
@@ -501,103 +396,37 @@
         </div>
 
         <!-- Projects Section -->
-        <div id="projects" class="section" style="display: none;">
+        <div id="projects" class="section">
             <div class="section-header">
                 <h2 class="section-title">Projects</h2>
                 <p class="section-desc">Here are some of my academic and personal projects related to physics and mathematics.</p>
             </div>
             <div class="projects-grid">
-                <!-- Project 1 -->
-                <div class="project-card">
-                    <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb" alt="Quantum Mechanics Simulation" class="project-img">
-                    <div class="project-content">
-                        <h3 class="project-title">Quantum Wave Function Visualizer</h3>
-                        <p class="project-desc">A web-based tool to visualize quantum wave functions and probability distributions for various potential wells.</p>
-                        <div class="project-tags">
-                            <span class="tag">Quantum Physics</span>
-                            <span class="tag">JavaScript</span>
-                            <span class="tag">Visualization</span>
-                        </div>
-                        <a href="#" class="project-link">View Project</a>
-                    </div>
-                </div>
-                
-                <!-- Project 2 -->
-                <div class="project-card">
-                    <img src="https://images.unsplash.com/photo-1544616522-3bfb12868c3e" alt="Mathematical Models" class="project-img">
-                    <div class="project-content">
-                        <h3 class="project-title">Differential Equations in Physics</h3>
-                        <p class="project-desc">Research on applications of partial differential equations in physical systems, with focus on wave and heat equations.</p>
-                        <div class="project-tags">
-                            <span class="tag">Mathematics</span>
-                            <span class="tag">Differential Equations</span>
-                            <span class="tag">Research</span>
-                        </div>
-                        <a href="#" class="project-link">View Research</a>
-                    </div>
-                </div>
-                
-                <!-- Project 3 -->
-                <div class="project-card">
-                    <img src="https://images.unsplash.com/photo-1611741385312-e1c23d6ddeb7" alt="Star Tracking" class="project-img">
-                    <div class="project-content">
-                        <h3 class="project-title">Night Sky Observation Journal</h3>
-                        <p class="project-desc">A digital journal documenting celestial observations with annotated star charts and personal reflections.</p>
-                        <div class="project-tags">
-                            <span class="tag">Astronomy</span>
-                            <span class="tag">Observation</span>
-                            <span class="tag">Documentation</span>
-                        </div>
-                        <a href="#" class="project-link">View Journal</a>
-                    </div>
+                <div class="empty-state">
+                    <div class="empty-icon">📝</div>
+                    <p>I'm currently working on some exciting projects.</p>
+                    <p>Check back soon to see what I've been building!</p>
                 </div>
             </div>
         </div>
 
         <!-- Blog Section -->
-        <div id="blog" class="section" style="display: none;">
+        <div id="blog" class="section">
             <div class="section-header">
                 <h2 class="section-title">Blog</h2>
                 <p class="section-desc">Thoughts and explorations on physics, mathematics, and the universe.</p>
             </div>
             <div class="blog-posts">
-                <!-- Blog Post 1 -->
-                <div class="blog-card">
-                    <img src="https://images.unsplash.com/photo-1639651859694-1bc293800eff" alt="Quantum Spin" class="blog-img">
-                    <div class="blog-content">
-                        <div class="blog-date">March 5, 2025</div>
-                        <h3 class="blog-title">Understanding Spin in Quantum Mechanics</h3>
-                        <p class="blog-excerpt">An exploration of the concept of spin in quantum mechanics and why it defies classical intuition.</p>
-                        <a href="spin_article.html" class="read-more">Read More →</a>
-                    </div>
-                </div>
-                
-                <!-- Blog Post 2 -->
-                <div class="blog-card">
-                    <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564" alt="Mathematical Beauty" class="blog-img">
-                    <div class="blog-content">
-                        <div class="blog-date">February 20, 2025</div>
-                        <h3 class="blog-title">The Unexpected Usefulness of Abstract Mathematics</h3>
-                        <p class="blog-excerpt">Exploring how seemingly abstract mathematical concepts find profound applications in physics.</p>
-                        <a href="#" class="read-more">Read More →</a>
-                    </div>
-                </div>
-                
-                <!-- Blog Post 3 -->
-                <div class="blog-card">
-                    <img src="https://images.unsplash.com/photo-1543722530-d2c3201371e7" alt="Stargazing" class="blog-img">
-                    <div class="blog-content">
-                        <div class="blog-date">January 15, 2025</div>
-                        <h3 class="blog-title">The Magic of Stargazing: A Personal Journey</h3>
-                        <p class="blog-excerpt">Reflections on my nightly stargazing ritual and how it connects to deeper philosophical questions.</p>
-                        <a href="#" class="read-more">Read More →</a>
-                    </div>
+                <div class="empty-state">
+                    <div class="empty-icon">📖</div>
+                    <p>I'm gathering my thoughts for some interesting blog posts about physics and mathematics.</p>
+                    <p>Stay tuned for upcoming articles!</p>
                 </div>
             </div>
         </div>
 
         <!-- Contact Section -->
-        <div id="contact" class="section" style="display: none;">
+        <div id="contact" class="section">
             <div class="section-header">
                 <h2 class="section-title">Contact</h2>
                 <p class="section-desc">Let's connect and explore the wonders of physics and mathematics together.</p>
@@ -628,5 +457,39 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show the about section by default
+            showSection('about');
+            
+            // Add event listeners to navigation links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const sectionId = this.getAttribute('href').substring(1);
+                    showSection(sectionId);
+                });
+            });
+        });
+        
+        function showSection(id) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show the selected section
+            const selectedSection = document.getElementById(id);
+            if (selectedSection) {
+                selectedSection.style.display = 'block';
+                
+                // Force re-trigger of animation
+                selectedSection.style.animation = 'none';
+                selectedSection.offsetHeight; // Trigger reflow
+                selectedSection.style.animation = 'fadeInUp 0.5s forwards';
+            }
+        }
+    </script>
 </body>
 </html>
