@@ -61,24 +61,25 @@
         }
         .about-container {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             justify-content: center;
             max-width: 900px;
             margin: 0 auto;
             text-align: left;
+            flex-direction: column;
         }
         .about-container img {
             width: 200px;
             height: auto;
             border-radius: 10px;
             box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
-            margin-right: 20px;
+            margin-bottom: 20px;
             animation: floatUpDown 3s infinite ease-in-out;
         }
         .about-text {
-            flex: 1;
             font-size: 18px;
             font-weight: 500;
+            text-align: left;
         }
         .blog-container {
             display: flex;
@@ -118,13 +119,8 @@
         }
         @media (max-width: 768px) {
             .about-container {
-                flex-direction: column;
                 text-align: center;
                 align-items: center;
-            }
-            .about-container img {
-                width: 150px;
-                margin: 0 0 20px 0;
             }
             .about-text {
                 text-align: center;
@@ -161,17 +157,11 @@
     </header>
     <div class="content">
         <div id="about" class="section">
-            <h2>About Me</h2>
             <div class="about-container">
                 <img src="profile.jpg" alt="Pavan Gaonkar">
                 <div class="about-text">
-                    <p><strong>Hey, I’m Pavan Gaonkar!</strong></p>
-                    <p>I developed an interest in physics despite the best efforts of my teachers. My curiosity about how the universe operates at its most fundamental level has led me to explore areas like <strong>quantum mechanics</strong> and <strong>general relativity (GTR)</strong>. Although I haven’t studied GTR yet, I plan to dive into it soon.</p>
-                    <p>Recently, I’ve also started developing a fascination for <strong>pure mathematics</strong>. It amazes me how abstract mathematical concepts—ones that seem disconnected from reality, like <strong>linear algebra</strong> and <strong>differential geometry</strong>—end up having profound applications in physics.</p>
-                    <p>I recently completed my <strong>undergraduate studies</strong> at <strong>Karnataka University, Dharwad, India</strong>. I love discussing deep ideas about the universe—even with people who may not share the same enthusiasm.</p>
-                    <p>Beyond physics, I enjoy reading <strong>S. L. Bhyrappa’s novels</strong>, playing <strong>ball badminton</strong> (though I rarely get the chance now), and <strong>stargazing</strong> every night.</p>
-                    <p>My long-term goal is to <strong>contribute original ideas</strong> to physics and possibly pursue a career in <strong>theoretical physics or academia</strong>.</p>
-                    <p>If you share a passion for <strong>physics, mathematics, philosophy, or the mysteries of the cosmos</strong>, I’d love to connect and exchange ideas!</p>
+                    <p>Hey, I’m Pavan Gaonkar! I developed an interest in physics despite the best efforts of my teachers. My curiosity about how the universe operates at its most fundamental level has led me to explore areas like quantum mechanics and general relativity (GTR). Although I haven’t studied GTR yet, I plan to dive into it soon.</p>
+                    <p>Recently, I’ve also started developing a fascination for pure mathematics. What truly amazes me is how abstract mathematical concepts—ones that seem completely disconnected from reality, like linear algebra and differential geometry—end up having profound applications in physics. Take linear algebra, for instance. If you read Linear Algebra Done Right, you might wonder how such abstract ideas could ever be useful. But once you encounter quantum mechanics, you realize that without linear algebra, constructing quantum theory would be nearly impossible...</p>
                 </div>
             </div>
         </div>
