@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/png" href="https://www.google.com/favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pavan Gaonkar</title>
@@ -356,12 +357,158 @@
                 padding: 40px 15px;
             }
         }
-    </style>
+    /* Additional CSS styles to enhance the website */
+:root {
+    --primary: #00bcd4;
+    --primary-dark: #008ba3;
+    --primary-light: #4dd0e1;
+    --primary-glow: rgba(0, 188, 212, 0.4);
+    --gradient-start: #00bcd4;
+    --gradient-end: #3f51b5;
+}
+
+/* Glow effect for the header text */
+h1 {
+    text-shadow: 0 0 10px var(--primary-glow), 0 0 20px var(--primary-glow);
+    transition: text-shadow 0.5s ease;
+}
+
+h1:hover {
+    text-shadow: 0 0 15px var(--primary-glow), 0 0 30px var(--primary-glow);
+}
+
+/* Enhanced section transitions */
+.section {
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* Animated cards for projects and blog posts */
+.projects-grid .empty-state,
+.blog-posts .empty-state,
+.contact-info {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.projects-grid .empty-state:hover,
+.blog-posts .empty-state:hover,
+.contact-info:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Animated gradient border for cards */
+.projects-grid .empty-state::before,
+.blog-posts .empty-state::before,
+.contact-info::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+}
+
+.projects-grid .empty-state:hover::before,
+.blog-posts .empty-state:hover::before,
+.contact-info:hover::before {
+    transform: translateX(0);
+}
+
+/* Animated social links */
+.social-link {
+    box-shadow: 0 0 0 rgba(0, 188, 212, 0.4);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 188, 212, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(0, 188, 212, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 188, 212, 0);
+    }
+}
+
+/* Enhanced profile image */
+.about-container img {
+    border: 3px solid var(--primary);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-container img:hover {
+    transform: scale(1.05) translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Background animations */
+@keyframes gradientBackground {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.section-header {
+    background: linear-gradient(90deg, var(--light-bg), var(--primary-light), var(--light-bg));
+    background-size: 200% 200%;
+    animation: gradientBackground 8s ease infinite;
+    border-radius: 8px;
+    padding: 20px 0;
+    margin-bottom: 40px;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--light-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
+}
+
+/* Animated highlight for paragraphs */
+.about-text p:hover {
+    background: linear-gradient(90deg, transparent, var(--primary-glow), transparent);
+    background-size: 200% 100%;
+    animation: moveHighlight 2s ease;
+}
+
+@keyframes moveHighlight {
+    from {
+        background-position: 100% 0;
+    }
+    to {
+        background-position: 0 0;
+    }
+}
+    </style> 
 </head>
 <body>
     <header>
         <div class="header-content">
-            <h1>Pavan Gaonkar</h1>
+            <h1 id="typing-text"></h1>
             <nav>
                 <ul>
                     <li><a href="#about" class="nav-link">About</a></li>
@@ -490,86 +637,9 @@
             }
         }
     </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <!-- ... (keep all head content identical) ... -->
-    <style>
-        /* ... (existing styles remain unchanged) ... */
-
-        /* ADDED PARAGRAPH ANIMATIONS */
-        .about-text p {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.6s forwards;
-        }
-
-        .about-text p:nth-child(1) { animation-delay: 0.2s; }
-        .about-text p:nth-child(2) { animation-delay: 0.4s; }
-        .about-text p:nth-child(3) { animation-delay: 0.6s; }
-        .about-text p:nth-child(4) { animation-delay: 0.8s; }
-        .about-text p:nth-child(5) { animation-delay: 1.0s; }
-        .about-text p:nth-child(6) { animation-delay: 1.2s; }
-    </style>
-</head>
-<body>
-    <!-- ... (keep all body content identical until about section) ... -->
-
-    <!-- About Section - Added animation triggers -->
-    <div id="about" class="section">
-        <div class="section-header">
-            <h2 class="section-title">About Me</h2>
-        </div>
-        <div class="about-container">
-            <div class="profile-img-container">
-                <img src="profile.jpg" alt="Pavan Gaonkar">
-            </div>
-            <div class="about-text">
-                <!-- Added space after "fundamental way." -->
-                <p>Hey, I'm Pavan Gaonkar! I am very much fascinated by how the universe works in the most fundamental way. As a result I really like quantum mechanics and General theory of relativity. Although I haven't studied GTR yet, I plan to dive into it soon.</p>
-                <!-- Rest of paragraphs remain unchanged -->
-            </div>
-        </div>
-    </div>
-
-    <!-- ... (keep all other sections identical) ... -->
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // MODIFIED SECTION HANDLER FOR ANIMATIONS
-            function showSection(id) {
-                // Reset all animations
-                document.querySelectorAll('.section').forEach(section => {
-                    section.style.display = 'none';
-                    section.style.animation = 'none';
-                });
-
-                // Show selected section
-                const selectedSection = document.getElementById(id);
-                if (selectedSection) {
-                    selectedSection.style.display = 'block';
-                    
-                    // Trigger re-animation
-                    requestAnimationFrame(() => {
-                        selectedSection.style.animation = 'fadeInUp 0.5s forwards';
-                        
-                        // Trigger paragraph animations
-                        if(id === 'about') {
-                            document.querySelectorAll('.about-text p').forEach((p, index) => {
-                                p.style.animation = 'none';
-                                requestAnimationFrame(() => {
-                                    p.style.animation = `fadeInUp 0.6s forwards ${index * 0.2 + 0.2}s`;
-                                });
-                            });
-                        }
-                    });
-                }
-            }
-
-            // Rest of original JS remains unchanged
-        });
-    </script>
+<script src="animations.js"></script>
+<script src="particles.js"></script>
+<script src="aboutParticles.js"></script>
+<script src="floating-elements.js"></script>
 </body>
 </html>
