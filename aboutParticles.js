@@ -8,10 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
-    // ✅ Reset background color (Just for debugging)
-    aboutSection.style.background = "rgba(0, 0, 0, 0.2)";
-
-    // ✅ Create a canvas inside #about
+    // ✅ Create a new canvas inside #about
     const aboutCanvas = document.createElement("canvas");
     aboutCanvas.id = "aboutCanvas";
     aboutSection.appendChild(aboutCanvas);
@@ -19,13 +16,42 @@ document.addEventListener("DOMContentLoaded", function () {
     aboutCanvas.height = aboutSection.clientHeight;
     const ctx = aboutCanvas.getContext("2d");
 
-    // ✅ Test if canvas is working by drawing WHITE dots
-    ctx.fillStyle = "white";
-    for (let i = 0; i < 5; i++) {
-        ctx.beginPath();
-        ctx.arc(50 + i * 30, 50, 10, 0, Math.PI * 2);
-        ctx.fill();
+    // ✅ Auto-adjust canvas size on window resize
+    window.addEventListener("resize", function () {
+        aboutCanvas.width = aboutSection.clientWidth;
+        aboutCanvas.height = aboutSection.clientHeight;
+    });
+
+    // ✅ Create moving particles
+    const particles = [];
+    for (let i = 0; i < 40; i++) {
+        particles.push({
+            x: Math.random() * aboutCanvas.width,
+            y: Math.random() * aboutCanvas.height,
+            size: Math.random() * 3 + 1,
+            speedX: (Math.random() - 0.5) * 0.8, // Slow, subtle movement
+            speedY: (Math.random() - 0.5) * 0.8
+        });
     }
 
-    console.log("Canvas test successful!");
+    function animateParticles() {
+        ctx.clearRect(0, 0, aboutCanvas.width, aboutCanvas.height);
+        particles.forEach(p => {
+            p.x += p.speedX;
+            p.y += p.speedY;
+
+            // Bounce particles back if they reach the edges
+            if (p.x < 0 || p.x > aboutCanvas.width) p.speedX *= -1;
+            if (p.y < 0 || p.y > aboutCanvas.height) p.speedY *= -1;
+
+            // Draw particles
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(255, 255, 255, 0.6)"; // Light white glow effect
+            ctx.fill();
+        });
+        requestAnimationFrame(animateParticles);
+    }
+
+    animateParticles();
 });
