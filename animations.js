@@ -1,41 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Typing Effect
-    const textArray = ["Hello, I'm Pavan!", "Physics Enthusiast", "Aspiring Researcher"];
-    let textIndex = 0;
+    // Typing Effect (Only "Pavan Gaonkar")
+    const text = "Pavan Gaonkar";
     let charIndex = 0;
     const typingElement = document.getElementById("typing-text");
 
     function type() {
-        if (charIndex < textArray[textIndex].length) {
-            typingElement.textContent += textArray[textIndex].charAt(charIndex);
+        if (charIndex < text.length) {
+            typingElement.textContent += text.charAt(charIndex);
             charIndex++;
             setTimeout(type, 100);
-        } else {
-            setTimeout(erase, 2000);
         }
     }
 
-    function erase() {
-        if (charIndex > 0) {
-            typingElement.textContent = textArray[textIndex].substring(0, charIndex - 1);
-            charIndex--;
-            setTimeout(erase, 50);
-        } else {
-            textIndex = (textIndex + 1) % textArray.length;
-            setTimeout(type, 500);
-        }
-    }
+    // Prevent the page from moving when text is empty
+    typingElement.style.minHeight = "1em";
     type();
-
-    // Fade-in Effect on Scroll
-    const sections = document.querySelectorAll(".fade-in");
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("visible");
-            }
-        });
-    }, { threshold: 0.2 });
-
-    sections.forEach(section => observer.observe(section));
 });
