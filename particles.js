@@ -32,3 +32,8 @@ function animateParticles() {
 }
 
 animateParticles();
+canvas.style.position = "fixed";
+canvas.style.top = "0";
+canvas.style.left = "0";
+canvas.style.zIndex = "-1"; // Ensures particles stay in the background
+
