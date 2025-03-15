@@ -1,73 +1,102 @@
-document.addEventListener("DOMContentLoaded", function () {
-    console.log("Animations.js Loaded Successfully!");
-
-    // ✅ Typing Effect (Now Guaranteed to Work)
-    function startTypingEffect() {
-        const text = "Pavan Gaonkar";
-        let charIndex = 0;
-        const typingElement = document.getElementById("typing-text");
-
-        if (!typingElement) {
-            console.error("Error: Element #typing-text not found!");
-            return;
+// Text typing animation and other visual effects
+document.addEventListener('DOMContentLoaded', function() {
+    // Typing animation for the header
+    const typingText = document.getElementById('typing-text');
+    const textToType = "Pavan Gaonkar";
+    const typingSpeed = 100; // milliseconds per character
+    
+    function typeText(text, element, index = 0) {
+        if (index < text.length) {
+            element.textContent += text.charAt(index);
+            setTimeout(() => typeText(text, element, index + 1), typingSpeed);
+        } else {
+            // Add blinking cursor effect after typing is complete
+            const cursor = document.createElement('span');
+            cursor.className = 'cursor';
+            cursor.textContent = '|';
+            element.appendChild(cursor);
+            
+            // Blink cursor
+            setInterval(() => {
+                cursor.style.opacity = cursor.style.opacity === '0' ? '1' : '0';
+            }, 500);
         }
-
-        function type() {
-            if (charIndex < text.length) {
-                typingElement.textContent += text.charAt(charIndex);
-                charIndex++;
-                setTimeout(type, 100);
-            }
-        }
-
-        // Ensure text starts empty before typing begins
-        typingElement.textContent = "";
-        type();
     }
-
-    // Run typing effect **AFTER** page is fully loaded
-    setTimeout(startTypingEffect, 500);
-
-    // ✅ Smooth Scroll Effect for Navigation Links
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function (e) {
+    
+    // Start typing animation with a short delay
+    setTimeout(() => {
+        typingText.textContent = '';
+        typeText(textToType, typingText);
+    }, 500);
+    
+    // Add smooth scroll behavior for navigation links
+    document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', function(e) {
             e.preventDefault();
-            const section = document.querySelector(this.getAttribute('href'));
-            if (section) {
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+                // Smooth scroll to the target element
                 window.scrollTo({
-                    top: section.offsetTop - 50,
+                    top: targetElement.offsetTop - 100,
                     behavior: 'smooth'
                 });
+                
+                // Show the section
+                showSection(targetId);
             }
         });
     });
-
-    // ✅ Fade-in Effect for Sections on Scroll
-    const sections = document.querySelectorAll(".fade-in");
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("visible");
-            }
+    
+    // Add hover effect to section titles
+    document.querySelectorAll('.section-title').forEach(title => {
+        title.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px)';
+            this.style.color = 'var(--primary)';
         });
-    }, { threshold: 0.2 });
-
-    sections.forEach(section => observer.observe(section));
-
-    // ✅ Back to Top Button
-    const backToTop = document.getElementById("backToTop");
-
-    if (backToTop) {
-        window.addEventListener("scroll", () => {
-            if (window.scrollY > 200) {
-                backToTop.style.display = "block";
-            } else {
-                backToTop.style.display = "none";
-            }
+        
+        title.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.color = '';
         });
-
-        backToTop.addEventListener("click", () => {
-            window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    
+    // Add fade-in effect when scrolling
+    const sections = document.querySelectorAll('.section');
+    
+    function checkScroll() {
+        sections.forEach(section => {
+            const sectionTop = section.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+            
+            if (sectionTop < windowHeight * 0.75) {
+                section.style.opacity = '1';
+                section.style.transform = 'translateY(0)';
+            }
         });
     }
+    
+    // Initial check and add scroll event listener
+    checkScroll();
+    window.addEventListener('scroll', checkScroll);
+    
+    // Add some CSS for the cursor
+    const style = document.createElement('style');
+    style.textContent = `
+        .cursor {
+            font-weight: 100;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        .section-title {
+            transition: transform 0.3s, color 0.3s;
+        }
+    `;
+    document.head.appendChild(style);
 });
