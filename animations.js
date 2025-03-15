@@ -1,22 +1,32 @@
 document.addEventListener("DOMContentLoaded", function () {
     console.log("Animations.js Loaded Successfully!");
 
-    // ✅ Typing Effect (Only "Pavan Gaonkar", No Double Letters)
-    const text = "Pavan Gaonkar";
-    let charIndex = 0;
-    const typingElement = document.getElementById("typing-text");
+    // ✅ Typing Effect (Now Guaranteed to Work)
+    function startTypingEffect() {
+        const text = "Pavan Gaonkar";
+        let charIndex = 0;
+        const typingElement = document.getElementById("typing-text");
 
-    function type() {
-        if (charIndex < text.length) {
-            typingElement.textContent += text.charAt(charIndex);
-            charIndex++;
-            setTimeout(type, 100);
+        if (!typingElement) {
+            console.error("Error: Element #typing-text not found!");
+            return;
         }
+
+        function type() {
+            if (charIndex < text.length) {
+                typingElement.textContent += text.charAt(charIndex);
+                charIndex++;
+                setTimeout(type, 100);
+            }
+        }
+
+        // Ensure text starts empty before typing begins
+        typingElement.textContent = "";
+        type();
     }
 
-    // Ensure text starts empty before typing begins
-    typingElement.textContent = "";
-    type();
+    // Run typing effect **AFTER** page is fully loaded
+    setTimeout(startTypingEffect, 500);
 
     // ✅ Smooth Scroll Effect for Navigation Links
     document.querySelectorAll('.nav-link').forEach(link => {
@@ -47,19 +57,17 @@ document.addEventListener("DOMContentLoaded", function () {
     // ✅ Back to Top Button
     const backToTop = document.getElementById("backToTop");
 
-    window.addEventListener("scroll", () => {
-        if (window.scrollY > 200) {
-            backToTop.style.display = "block";
-        } else {
-            backToTop.style.display = "none";
-        }
-    });
+    if (backToTop) {
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 200) {
+                backToTop.style.display = "block";
+            } else {
+                backToTop.style.display = "none";
+            }
+        });
 
-    backToTop.addEventListener("click", () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    });
+        backToTop.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    }
 });
-
-});
-
-
