@@ -498,9 +498,25 @@ h1:hover {
     z-index: 2;
     position: relative;
 }
+    /* Global background canvas */
+#background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Send it to the back */
+}
+
+/* Ensure content is above the animation */
+header, .content {
+    position: relative;
+    z-index: 10; /* Bring content to the front */
+}
     </style> 
 </head>
 <body>
+<canvas id="background"></canvas>
     <header>
         <div class="header-content">
             <h1 id="typing-text"></h1>
