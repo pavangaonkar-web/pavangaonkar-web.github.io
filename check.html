@@ -101,6 +101,47 @@ a:hover {
 .contact-item a {
     color: white;
 }
+        /* Set default text color back to dark for white-background sections */
+.section {
+    color: #333; /* Dark gray for readability */
+}
+
+/* Ensure the About, Projects, Blog, and Contact sections keep dark text */
+#about, #projects, #blog, #contact {
+    background: white;
+    color: #333;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Keep the navigation and main text white (on the dark background) */
+body {
+    color: white;
+}
+
+/* Ensure headings and navigation remain white */
+h1, h2, h3, h4, h5, h6 {
+    color: white;
+}
+
+/* Special case: Override headings inside white-background sections */
+#about .section-title,
+#projects .section-title,
+#blog .section-title,
+#contact .section-title {
+    color: #222; /* Dark gray */
+}
+
+/* Keep links readable */
+a {
+    color: #58a6ff; /* Light blue */
+}
+/* Fix double underline on section titles */
+.section-title::after {
+    display: none;
+}
+
 
         h1 {
             font-size: 3rem;
