@@ -58,37 +58,6 @@
             max-width: 1200px;
             margin: 0 auto;
         }
-         .background-animation {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: #0d1117; /* Dark background */
-}
-
-
-nav a {
-    color: white;
-}
-/* Change text color of About Me section to white */
-#about {
-    color: white;
-}
-
-/* Ensure the heading is also white */
-#about .section-title {
-    color: white;
-}
-/* Make only the section titles white */
-#about .section-title,
-#projects .section-title,
-#blog .section-title,
-#contact .section-title {
-    color: white;
-}
-
 
         h1 {
             font-size: 3rem;
@@ -391,7 +360,6 @@ nav a {
     </style>
 </head>
 <body>
-    <canvas class="background-animation" id="background"></canvas>
     <header>
         <div class="header-content">
             <h1 id="typing-text"></h1>
@@ -526,64 +494,5 @@ nav a {
 <script src="animations.js"></script>
 <script src="particles.js"></script>
 <script src="aboutParticles.js"></script>
-<script>
-    const canvas = document.getElementById('background');
-    const ctx = canvas.getContext('2d');
-
-    function setCanvasSize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    
-    setCanvasSize();
-    window.addEventListener('resize', setCanvasSize);
-
-    class Particle {
-        constructor(x, y) {
-            this.x = x;
-            this.y = y;
-            this.size = Math.random() * 2 + 1;
-            this.speedX = Math.random() * 2 - 1;
-            this.speedY = Math.random() * 2 - 1;
-            this.color = `rgba(100, 255, ${Math.floor(Math.random() * 155 + 100)}, ${Math.random() * 0.5 + 0.1})`;
-        }
-        
-        update() {
-            this.x += this.speedX;
-            this.y += this.speedY;
-            if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
-            if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
-        }
-        
-        draw() {
-            ctx.fillStyle = this.color;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-        }
-    }
-
-    let particles = [];
-    function initParticles() {
-        const particleCount = Math.floor((canvas.width * canvas.height) / 10000);
-        for (let i = 0; i < particleCount; i++) {
-            const x = Math.random() * canvas.width;
-            const y = Math.random() * canvas.height;
-            particles.push(new Particle(x, y));
-        }
-    }
-
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => {
-            p.update();
-            p.draw();
-        });
-        requestAnimationFrame(animate);
-    }
-
-    initParticles();
-    animate();
-</script>
 </body>
 </html>
