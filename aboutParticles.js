@@ -8,10 +8,10 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
-    // ✅ Remove the dark background test
-    aboutSection.style.background = "none"; // Reset background
+    // ✅ Reset background color (Just for debugging)
+    aboutSection.style.background = "rgba(0, 0, 0, 0.2)";
 
-    // ✅ Create canvas inside #about section
+    // ✅ Create a canvas inside #about
     const aboutCanvas = document.createElement("canvas");
     aboutCanvas.id = "aboutCanvas";
     aboutSection.appendChild(aboutCanvas);
@@ -19,40 +19,13 @@ document.addEventListener("DOMContentLoaded", function () {
     aboutCanvas.height = aboutSection.clientHeight;
     const ctx = aboutCanvas.getContext("2d");
 
-    // ✅ Adjust canvas size on window resize
-    window.addEventListener("resize", function () {
-        aboutCanvas.width = aboutSection.clientWidth;
-        aboutCanvas.height = aboutSection.clientHeight;
-    });
-
-    // ✅ Create floating particles
-    const particles = [];
-    for (let i = 0; i < 40; i++) {
-        particles.push({
-            x: Math.random() * aboutCanvas.width,
-            y: Math.random() * aboutCanvas.height,
-            size: Math.random() * 3 + 1,
-            speedX: (Math.random() - 0.5) * 1.5,
-            speedY: (Math.random() - 0.5) * 1.5
-        });
+    // ✅ Test if canvas is working by drawing WHITE dots
+    ctx.fillStyle = "white";
+    for (let i = 0; i < 5; i++) {
+        ctx.beginPath();
+        ctx.arc(50 + i * 30, 50, 10, 0, Math.PI * 2);
+        ctx.fill();
     }
 
-    // ✅ Function to animate the particles
-    function animateParticles() {
-        ctx.clearRect(0, 0, aboutCanvas.width, aboutCanvas.height);
-        particles.forEach(p => {
-            p.x += p.speedX;
-            p.y += p.speedY;
-            if (p.x < 0 || p.x > aboutCanvas.width) p.speedX *= -1;
-            if (p.y < 0 || p.y > aboutCanvas.height) p.speedY *= -1;
-
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            ctx.fillStyle = "rgba(255, 255, 255, 0.7)"; // White floating dots
-            ctx.fill();
-        });
-        requestAnimationFrame(animateParticles);
-    }
-
-    animateParticles();
+    console.log("Canvas test successful!");
 });
