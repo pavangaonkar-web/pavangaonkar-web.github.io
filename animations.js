@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
     // Typing Effect
-    const text = ["Hello, I'm Pavan!", "Physics Enthusiast", "Aspiring Researcher"];
-    let index = 0;
+    const textArray = ["Hello, I'm Pavan!", "Physics Enthusiast", "Aspiring Researcher"];
+    let textIndex = 0;
     let charIndex = 0;
     const typingElement = document.getElementById("typing-text");
 
     function type() {
-        if (charIndex < text[index].length) {
-            typingElement.textContent += text[index].charAt(charIndex);
+        if (charIndex < textArray[textIndex].length) {
+            typingElement.textContent += textArray[textIndex].charAt(charIndex);
             charIndex++;
             setTimeout(type, 100);
         } else {
@@ -17,20 +17,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function erase() {
         if (charIndex > 0) {
-            typingElement.textContent = text[index].substring(0, charIndex - 1);
+            typingElement.textContent = textArray[textIndex].substring(0, charIndex - 1);
             charIndex--;
             setTimeout(erase, 50);
         } else {
-            index = (index + 1) % text.length;
+            textIndex = (textIndex + 1) % textArray.length;
             setTimeout(type, 500);
         }
     }
-
     type();
 
-    // Section Fade-in Animation
+    // Fade-in Effect on Scroll
     const sections = document.querySelectorAll(".fade-in");
-    const observer = new IntersectionObserver((entries, observer) => {
+    const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add("visible");
@@ -39,10 +38,4 @@ document.addEventListener("DOMContentLoaded", function () {
     }, { threshold: 0.2 });
 
     sections.forEach(section => observer.observe(section));
-
-    // Button Hover Effect
-    document.querySelectorAll("button").forEach(button => {
-        button.addEventListener("mouseover", () => button.style.transform = "scale(1.1)");
-        button.addEventListener("mouseleave", () => button.style.transform = "scale(1)");
-    });
 });
