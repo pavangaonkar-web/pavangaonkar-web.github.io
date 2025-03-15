@@ -58,6 +58,14 @@
             max-width: 1200px;
             margin: 0 auto;
         }
+       .background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Ensures it stays in the background */
+}
 
         h1 {
             font-size: 3rem;
@@ -140,21 +148,8 @@
             max-width: 900px;
             margin: 0 auto;
             gap: 40px;
-            position: relative;
-            overflow: hidden;
-                    }
+        }
 
-         #about-background {
-                    position: absolute;
-                      top: 0;
-                        left: 0;
-                         z-index: 1;
-                             }
-
-          .about-text {
-                     position: relative;
-                       z-index: 2;
-                                  }
         .profile-img-container {
             flex-shrink: 0;
         }
@@ -370,180 +365,11 @@
                 padding: 40px 15px;
             }
         }
-    /* Additional CSS styles to enhance the website */
-:root {
-    --primary: #00bcd4;
-    --primary-dark: #008ba3;
-    --primary-light: #4dd0e1;
-    --primary-glow: rgba(0, 188, 212, 0.4);
-    --gradient-start: #00bcd4;
-    --gradient-end: #3f51b5;
-}
-
-/* Glow effect for the header text */
-h1 {
-    text-shadow: 0 0 10px var(--primary-glow), 0 0 20px var(--primary-glow);
-    transition: text-shadow 0.5s ease;
-}
-
-h1:hover {
-    text-shadow: 0 0 15px var(--primary-glow), 0 0 30px var(--primary-glow);
-}
-
-/* Enhanced section transitions */
-.section {
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-/* Animated cards for projects and blog posts */
-.projects-grid .empty-state,
-.blog-posts .empty-state,
-.contact-info {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden;
-    position: relative;
-}
-
-.projects-grid .empty-state:hover,
-.blog-posts .empty-state:hover,
-.contact-info:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-}
-
-/* Animated gradient border for cards */
-.projects-grid .empty-state::before,
-.blog-posts .empty-state::before,
-.contact-info::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
-    transform: translateX(-100%);
-    transition: transform 0.5s ease;
-}
-
-.projects-grid .empty-state:hover::before,
-.blog-posts .empty-state:hover::before,
-.contact-info:hover::before {
-    transform: translateX(0);
-}
-
-/* Animated social links */
-.social-link {
-    box-shadow: 0 0 0 rgba(0, 188, 212, 0.4);
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(0, 188, 212, 0.4);
-    }
-    70% {
-        box-shadow: 0 0 0 10px rgba(0, 188, 212, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(0, 188, 212, 0);
-    }
-}
-
-/* Enhanced profile image */
-.about-container img {
-    border: 3px solid var(--primary);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.about-container img:hover {
-    transform: scale(1.05) translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-}
-/* Scrollbar styling */
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--light-bg);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--primary);
-    border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-dark);
-}
-
-/* Animated highlight for paragraphs */
-.about-text p:hover {
-    background: linear-gradient(90deg, transparent, var(--primary-glow), transparent);
-    background-size: 200% 100%;
-    animation: moveHighlight 2s ease;
-}
-
-@keyframes moveHighlight {
-    from {
-        background-position: 100% 0;
-    }
-    to {
-        background-position: 0 0;
-    }
-}
-        /* ADD THIS NEW RULE */
-.content {
-    z-index: 2;
-    position: relative;
-}
-    /* Global background canvas */
-#background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; /* Send it to the back */
-}
-
-/* Ensure content is above the animation */
-header, .content {
-    position: relative;
-    z-index: 10; /* Bring content to the front */
-}
-    </style> 
-    <style>
-    .background-animation {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-    }
-    
-    /* Make your existing content visible over the background */
-    body {
-        position: relative;
-    }
-    
-    /* Add this to your existing content container */
-    .container, main, #content, .wrapper {
-        position: relative;
-        z-index: 10;
-        background: rgba(13, 17, 23, 0.5);
-        backdrop-filter: blur(2px);
-        border-radius: 5px;
-        padding: 20px;
-        margin: 20px auto;
-    }
-</style>
+    </style>
 </head>
 <body>
     <canvas class="background-animation" id="background"></canvas>
-<header>
+    <header>
         <div class="header-content">
             <h1 id="typing-text"></h1>
             <nav>
@@ -559,7 +385,6 @@ header, .content {
 
     <div class="content">
         <!-- About Section -->
-    <canvas id="about-background"></canvas>
         <div id="about" class="section">
             <div class="section-header">
                 <h2 class="section-title">About Me</h2>
@@ -678,6 +503,6 @@ header, .content {
 <script src="animations.js"></script>
 <script src="particles.js"></script>
 <script src="aboutParticles.js"></script>
-<script src="animated-background.js"></script>
+<script src="about-animation.js"></script>
 </body>
 </html>
