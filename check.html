@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
+    <link rel="icon" type="image/png" href="https://www.google.com/favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pavan Gaonkar</title>
-    <link rel="icon" type="image/png" href="https://www.google.com/favicon.ico">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <style>
         :root {
@@ -12,7 +12,7 @@
             --primary-dark: #008ba3;
             --text: #333;
             --light-bg: #f8f9fa;
-            --dark-bg: #0d1117;
+            --dark-bg: #333;
             --white: #fff;
             --card-bg: #fff;
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -27,6 +27,8 @@
 
         body {
             font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
             background-color: var(--dark-bg);
             color: var(--text);
             line-height: 1.6;
@@ -34,17 +36,6 @@
             overflow-x: hidden;
         }
 
-        /* Background Canvas */
-        .background-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-        /* Header Styles */
         header {
             background: url('https://cdn.mos.cms.futurecdn.net/eToSsNm65xFUUJSLsz6Lm4.gif') no-repeat center center/cover;
             color: var(--white);
@@ -68,6 +59,16 @@
             margin: 0 auto;
         }
 
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: #0d1117;
+        }
+
         h1 {
             font-size: 3rem;
             font-weight: 700;
@@ -80,7 +81,6 @@
             transition: var(--transition);
         }
 
-        /* Navigation Styles */
         nav {
             margin-top: 25px;
         }
@@ -129,7 +129,6 @@
             width: 100%;
         }
 
-        /* Content Styles */
         .content {
             padding: 60px 20px;
             max-width: 1200px;
@@ -137,47 +136,11 @@
         }
 
         .section {
-            margin-bottom: 40px;
+            margin-bottom: 60px;
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.5s forwards;
             display: none;
-        }
-
-        /* Section Headers */
-        .section-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .section-title {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            position: relative;
-            display: inline-block;
-            color: var(--white);
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 70px;
-            height: 3px;
-            background: var(--primary);
-        }
-
-        .section-desc {
-            max-width: 600px;
-            margin: 0 auto;
-            color: #666;
-        }
-
-        /* About Section */
-        #about {
-            color: var(--white);
         }
 
         .about-container {
@@ -205,13 +168,13 @@
             font-size: 1.1rem;
             font-weight: 400;
             text-align: left;
+            color: var(--white);
         }
 
         .about-text p {
             margin-bottom: 15px;
         }
 
-        /* Projects Section */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -219,26 +182,19 @@
             margin-top: 30px;
         }
 
-        /* Blog Section */
-        .blog-posts {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 20px;
-        }
-
-        /* Empty State Component */
         .empty-state {
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             padding: 30px;
             text-align: center;
             box-shadow: var(--shadow);
             grid-column: 1 / -1;
+            backdrop-filter: blur(5px);
+            color: var(--white);
         }
 
         .empty-state p {
-            color: #666;
+            color: #ccc;
             font-size: 1.1rem;
             margin-bottom: 15px;
         }
@@ -249,18 +205,26 @@
             margin-bottom: 15px;
         }
 
-        /* Contact Section */
+        .blog-posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
         .contact-container {
             max-width: 600px;
             margin: 0 auto;
         }
 
         .contact-info {
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.1);
             padding: 30px;
             border-radius: 10px;
             box-shadow: var(--shadow);
             text-align: center;
+            backdrop-filter: blur(5px);
+            color: var(--white);
         }
 
         .contact-item {
@@ -301,7 +265,17 @@
             transform: translateY(-3px);
         }
 
-        /* Animations */
+        .section-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .section-desc {
+            max-width: 600px;
+            margin: 0 auto;
+            color: #ccc;
+        }
+
         @keyframes floatUpDown {
             0%, 100% {
                 transform: translateY(0);
@@ -318,7 +292,6 @@
             }
         }
 
-        /* Responsive Styles */
         @media (max-width: 900px) {
             .about-container {
                 flex-direction: column;
@@ -381,7 +354,7 @@
     <canvas class="background-animation" id="background"></canvas>
     <header>
         <div class="header-content">
-            <h1 id="typing-text">Pavan Gaonkar</h1>
+            <h1>Pavan Gaonkar</h1>
             <nav>
                 <ul>
                     <li><a href="#about" class="nav-link">About</a></li>
@@ -394,11 +367,7 @@
     </header>
 
     <div class="content">
-        <!-- About Section -->
-        <section id="about" class="section">
-            <div class="section-header">
-                <h2 class="section-title">About Me</h2>
-            </div>
+        <div id="about" class="section">
             <div class="about-container">
                 <div class="profile-img-container">
                     <img src="profile.jpg" alt="Pavan Gaonkar">
@@ -412,12 +381,10 @@
                     <p>If you share a passion for physics, mathematics, philosophy, or the mysteries of the cosmos, I'd love to connect and exchange ideas!</p>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Projects Section -->
-        <section id="projects" class="section">
+        <div id="projects" class="section">
             <div class="section-header">
-                <h2 class="section-title">Projects</h2>
                 <p class="section-desc">Here are some of my academic and personal projects related to physics and mathematics.</p>
             </div>
             <div class="projects-grid">
@@ -427,12 +394,10 @@
                     <p>Check back soon to see what I've been building!</p>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Blog Section -->
-        <section id="blog" class="section">
+        <div id="blog" class="section">
             <div class="section-header">
-                <h2 class="section-title">Blog</h2>
                 <p class="section-desc">Thoughts and explorations on physics, mathematics, and the universe.</p>
             </div>
             <div class="blog-posts">
@@ -442,12 +407,10 @@
                     <p>Stay tuned for upcoming articles!</p>
                 </div>
             </div>
-        </section>
-        
-       <!-- Contact Section -->
+        </div>
+
         <div id="contact" class="section">
             <div class="section-header">
-                <h2 class="section-title">Contact</h2>
                 <p class="section-desc">Let's connect and explore the wonders of physics and mathematics together.</p>
             </div>
             <div class="contact-container">
@@ -462,13 +425,13 @@
                         <p><strong>Location:</strong> Karnataka, India</p>
                     </div>
                     <div class="social-links">
-                        <a href="#" class="social-link">
+                        <a href="https://www.linkedin.com/in/pavan-gaonkar-07a0972bb/" class="social-link" aria-label="LinkedIn">
                             <span>in</span>
                         </a>
-                        <a href="#" class="social-link">
+                        <a href="#" class="social-link" aria-label="GitHub">
                             <span>GH</span>
                         </a>
-                        <a href="#" class="social-link">
+                        <a href="#" class="social-link" aria-label="Twitter">
                             <span>TW</span>
                         </a>
                     </div>
@@ -479,10 +442,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Show the about section by default
             showSection('about');
             
-            // Add event listeners to navigation links
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -493,25 +454,80 @@
         });
         
         function showSection(id) {
-            // Hide all sections
             document.querySelectorAll('.section').forEach(section => {
                 section.style.display = 'none';
             });
             
-            // Show the selected section
             const selectedSection = document.getElementById(id);
             if (selectedSection) {
                 selectedSection.style.display = 'block';
                 
-                // Force re-trigger of animation
                 selectedSection.style.animation = 'none';
-                selectedSection.offsetHeight; // Trigger reflow
+                selectedSection.offsetHeight;
                 selectedSection.style.animation = 'fadeInUp 0.5s forwards';
             }
         }
+
+        const canvas = document.getElementById('background');
+        const ctx = canvas.getContext('2d');
+
+        function setCanvasSize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        setCanvasSize();
+        window.addEventListener('resize', setCanvasSize);
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 2 - 1;
+                this.speedY = Math.random() * 2 - 1;
+                this.color = `rgba(100, 255, ${Math.floor(Math.random() * 155 + 100)}, ${Math.random() * 0.5 + 0.1})`;
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
+                if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
+            }
+            
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        let particles = [];
+        function initParticles() {
+            particles = [];
+            const particleCount = Math.min(100, Math.floor((canvas.width * canvas.height) / 10000));
+            for (let i = 0; i < particleCount; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                particles.push(new Particle(x, y));
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        initParticles();
+        animate();
+        
+        window.addEventListener('resize', initParticles);
     </script>
-<script src="animations.js"></script>
-<script src="particles.js"></script>
-<script src="aboutParticles.js"></script>
 </body>
 </html>
