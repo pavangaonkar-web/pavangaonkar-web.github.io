@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/png" href="https://www.google.com/favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pavan Gaonkar</title>
+    <link rel="icon" type="image/png" href="https://www.google.com/favicon.ico">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <style>
         :root {
@@ -12,7 +12,7 @@
             --primary-dark: #008ba3;
             --text: #333;
             --light-bg: #f8f9fa;
-            --dark-bg: #333;
+            --dark-bg: #0d1117;
             --white: #fff;
             --card-bg: #fff;
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -27,12 +27,21 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--light-bg);
+            background-color: var(--dark-bg);
             color: var(--text);
             line-height: 1.6;
             scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* Background Canvas */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
 
         /* Header Styles */
@@ -79,6 +88,9 @@
         nav ul {
             list-style: none;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         nav ul li {
@@ -132,7 +144,42 @@
             display: none;
         }
 
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+            color: var(--white);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .section-desc {
+            max-width: 600px;
+            margin: 0 auto;
+            color: #666;
+        }
+
         /* About Section */
+        #about {
+            color: var(--white);
+        }
+
         .about-container {
             display: flex;
             align-items: flex-start;
@@ -172,6 +219,15 @@
             margin-top: 30px;
         }
 
+        /* Blog Section */
+        .blog-posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        /* Empty State Component */
         .empty-state {
             background: var(--card-bg);
             border-radius: 10px;
@@ -191,14 +247,6 @@
             font-size: 3rem;
             color: var(--primary);
             margin-bottom: 15px;
-        }
-
-        /* Blog Section */
-        .blog-posts {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 20px;
         }
 
         /* Contact Section */
@@ -251,36 +299,6 @@
         .social-link:hover {
             background: var(--primary-dark);
             transform: translateY(-3px);
-        }
-
-        /* Section Headers */
-        .section-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .section-title {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 70px;
-            height: 3px;
-            background: var(--primary);
-        }
-
-        .section-desc {
-            max-width: 600px;
-            margin: 0 auto;
-            color: #666;
         }
 
         /* Animations */
@@ -360,9 +378,10 @@
     </style>
 </head>
 <body>
+    <canvas class="background-animation" id="background"></canvas>
     <header>
         <div class="header-content">
-            <h1 id="typing-text"></h1>
+            <h1 id="typing-text">Pavan Gaonkar</h1>
             <nav>
                 <ul>
                     <li><a href="#about" class="nav-link">About</a></li>
@@ -376,7 +395,7 @@
 
     <div class="content">
         <!-- About Section -->
-        <div id="about" class="section">
+        <section id="about" class="section">
             <div class="section-header">
                 <h2 class="section-title">About Me</h2>
             </div>
@@ -385,18 +404,18 @@
                     <img src="profile.jpg" alt="Pavan Gaonkar">
                 </div>
                 <div class="about-text">
-                    <p>Hey, I'm Pavan Gaonkar! I am very much fascinated by how the universe works in the most fundamental way.As a result i really like quantum mechanics and General theory of relativity.Although I haven't studied GTR yet, I plan to dive into it soon.</p>
+                    <p>Hey, I'm Pavan Gaonkar! I am very much fascinated by how the universe works in the most fundamental way. As a result I really like quantum mechanics and General theory of relativity. Although I haven't studied GTR yet, I plan to dive into it soon.</p>
                     <p>Recently, I've also started developing a fascination for pure mathematics. What truly amazes me is how abstract mathematical concepts—ones that seem completely disconnected from reality, like linear algebra and differential geometry—end up having profound applications in physics. Take linear algebra, for instance. If you read Linear Algebra Done Right, you might wonder how such abstract ideas could ever be useful. But once you encounter quantum mechanics, you realize that without linear algebra, constructing quantum theory would be nearly impossible.</p>
-                    <p>I recently completed my undergraduate studies at Karnataka University, Dharwad, India. I love discussing deep ideas about the universe</p>
+                    <p>I recently completed my undergraduate studies at Karnataka University, Dharwad, India. I love discussing deep ideas about the universe.</p>
                     <p>Beyond physics, I enjoy reading S. L. Bhyrappa's novels, which offer profound insights into Indian philosophy and life. I also used to play ball badminton (BBT), though I no longer have the equipment or people to play with. One habit that remains unchanged, however, is my love for stargazing—I watch the stars every night because they are truly mesmerizing.</p>
                     <p>My long-term goal is to contribute original ideas to physics and possibly pursue a career in theoretical physics or academia.</p>
                     <p>If you share a passion for physics, mathematics, philosophy, or the mysteries of the cosmos, I'd love to connect and exchange ideas!</p>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- Projects Section -->
-        <div id="projects" class="section">
+        <section id="projects" class="section">
             <div class="section-header">
                 <h2 class="section-title">Projects</h2>
                 <p class="section-desc">Here are some of my academic and personal projects related to physics and mathematics.</p>
@@ -408,10 +427,10 @@
                     <p>Check back soon to see what I've been building!</p>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- Blog Section -->
-        <div id="blog" class="section">
+        <section id="blog" class="section">
             <div class="section-header">
                 <h2 class="section-title">Blog</h2>
                 <p class="section-desc">Thoughts and explorations on physics, mathematics, and the universe.</p>
@@ -423,9 +442,9 @@
                     <p>Stay tuned for upcoming articles!</p>
                 </div>
             </div>
-        </div>
-
-        <!-- Contact Section -->
+        </section>
+        
+       <!-- Contact Section -->
         <div id="contact" class="section">
             <div class="section-header">
                 <h2 class="section-title">Contact</h2>
