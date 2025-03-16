@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <link rel="icon" type="image/png" href="https://www.google.com/favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,13 +29,13 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: var(--light-bg);
+            background-color: var(--dark-bg);
             color: var(--text);
             line-height: 1.6;
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
-        /* Header Styles */
         header {
             background: url('https://cdn.mos.cms.futurecdn.net/eToSsNm65xFUUJSLsz6Lm4.gif') no-repeat center center/cover;
             color: var(--white);
@@ -58,37 +58,16 @@
             max-width: 1200px;
             margin: 0 auto;
         }
-         .background-animation {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: #0d1117; /* Dark background */
-}
 
-
-nav a {
-    color: white;
-}
-/* Change text color of About Me section to white */
-#about {
-    color: white;
-}
-
-/* Ensure the heading is also white */
-#about .section-title {
-    color: white;
-}
-/* Make only the section titles white */
-#about .section-title,
-#projects .section-title,
-#blog .section-title,
-#contact .section-title {
-    color: white;
-}
-
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: #0d1117;
+        }
 
         h1 {
             font-size: 3rem;
@@ -102,7 +81,6 @@ nav a {
             transition: var(--transition);
         }
 
-        /* Navigation Styles */
         nav {
             margin-top: 25px;
         }
@@ -110,6 +88,9 @@ nav a {
         nav ul {
             list-style: none;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         nav ul li {
@@ -148,7 +129,6 @@ nav a {
             width: 100%;
         }
 
-        /* Content Styles */
         .content {
             padding: 60px 20px;
             max-width: 1200px;
@@ -156,14 +136,13 @@ nav a {
         }
 
         .section {
-            margin-bottom: 40px;
+            margin-bottom: 60px;
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.5s forwards;
             display: none;
         }
 
-        /* About Section */
         .about-container {
             display: flex;
             align-items: flex-start;
@@ -189,13 +168,13 @@ nav a {
             font-size: 1.1rem;
             font-weight: 400;
             text-align: left;
+            color: var(--white);
         }
 
         .about-text p {
             margin-bottom: 15px;
         }
 
-        /* Projects Section */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -204,16 +183,18 @@ nav a {
         }
 
         .empty-state {
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             padding: 30px;
             text-align: center;
             box-shadow: var(--shadow);
             grid-column: 1 / -1;
+            backdrop-filter: blur(5px);
+            color: var(--white);
         }
 
         .empty-state p {
-            color: #666;
+            color: #ccc;
             font-size: 1.1rem;
             margin-bottom: 15px;
         }
@@ -224,7 +205,6 @@ nav a {
             margin-bottom: 15px;
         }
 
-        /* Blog Section */
         .blog-posts {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -232,18 +212,19 @@ nav a {
             margin-top: 20px;
         }
 
-        /* Contact Section */
         .contact-container {
             max-width: 600px;
             margin: 0 auto;
         }
 
         .contact-info {
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.1);
             padding: 30px;
             border-radius: 10px;
             box-shadow: var(--shadow);
             text-align: center;
+            backdrop-filter: blur(5px);
+            color: var(--white);
         }
 
         .contact-item {
@@ -284,37 +265,17 @@ nav a {
             transform: translateY(-3px);
         }
 
-        /* Section Headers */
         .section-header {
             text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .section-title {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 70px;
-            height: 3px;
-            background: var(--primary);
+            margin-bottom: 20px;
         }
 
         .section-desc {
             max-width: 600px;
             margin: 0 auto;
-            color: #666;
+            color: #ccc;
         }
 
-        /* Animations */
         @keyframes floatUpDown {
             0%, 100% {
                 transform: translateY(0);
@@ -331,7 +292,6 @@ nav a {
             }
         }
 
-        /* Responsive Styles */
         @media (max-width: 900px) {
             .about-container {
                 flex-direction: column;
@@ -394,7 +354,7 @@ nav a {
     <canvas class="background-animation" id="background"></canvas>
     <header>
         <div class="header-content">
-            <h1 id="typing-text"></h1>
+            <h1>Pavan Gaonkar</h1>
             <nav>
                 <ul>
                     <li><a href="#about" class="nav-link">About</a></li>
@@ -407,19 +367,15 @@ nav a {
     </header>
 
     <div class="content">
-        <!-- About Section -->
         <div id="about" class="section">
-            <div class="section-header">
-                <h2 class="section-title">About Me</h2>
-            </div>
             <div class="about-container">
                 <div class="profile-img-container">
                     <img src="profile.jpg" alt="Pavan Gaonkar">
                 </div>
                 <div class="about-text">
-                    <p>Hey, I'm Pavan Gaonkar! I am very much fascinated by how the universe works in the most fundamental way.As a result i really like quantum mechanics and General theory of relativity.Although I haven't studied GTR yet, I plan to dive into it soon.</p>
+                    <p>Hey, I'm Pavan Gaonkar! I am very much fascinated by how the universe works in the most fundamental way. As a result I really like quantum mechanics and General theory of relativity. Although I haven't studied GTR yet, I plan to dive into it soon.</p>
                     <p>Recently, I've also started developing a fascination for pure mathematics. What truly amazes me is how abstract mathematical concepts—ones that seem completely disconnected from reality, like linear algebra and differential geometry—end up having profound applications in physics. Take linear algebra, for instance. If you read Linear Algebra Done Right, you might wonder how such abstract ideas could ever be useful. But once you encounter quantum mechanics, you realize that without linear algebra, constructing quantum theory would be nearly impossible.</p>
-                    <p>I recently completed my undergraduate studies at Karnataka University, Dharwad, India. I love discussing deep ideas about the universe</p>
+                    <p>I recently completed my undergraduate studies at Karnataka University, Dharwad, India. I love discussing deep ideas about the universe.</p>
                     <p>Beyond physics, I enjoy reading S. L. Bhyrappa's novels, which offer profound insights into Indian philosophy and life. I also used to play ball badminton (BBT), though I no longer have the equipment or people to play with. One habit that remains unchanged, however, is my love for stargazing—I watch the stars every night because they are truly mesmerizing.</p>
                     <p>My long-term goal is to contribute original ideas to physics and possibly pursue a career in theoretical physics or academia.</p>
                     <p>If you share a passion for physics, mathematics, philosophy, or the mysteries of the cosmos, I'd love to connect and exchange ideas!</p>
@@ -427,10 +383,8 @@ nav a {
             </div>
         </div>
 
-        <!-- Projects Section -->
         <div id="projects" class="section">
             <div class="section-header">
-                <h2 class="section-title">Projects</h2>
                 <p class="section-desc">Here are some of my academic and personal projects related to physics and mathematics.</p>
             </div>
             <div class="projects-grid">
@@ -442,10 +396,8 @@ nav a {
             </div>
         </div>
 
-        <!-- Blog Section -->
         <div id="blog" class="section">
             <div class="section-header">
-                <h2 class="section-title">Blog</h2>
                 <p class="section-desc">Thoughts and explorations on physics, mathematics, and the universe.</p>
             </div>
             <div class="blog-posts">
@@ -457,10 +409,8 @@ nav a {
             </div>
         </div>
 
-        <!-- Contact Section -->
         <div id="contact" class="section">
             <div class="section-header">
-                <h2 class="section-title">Contact</h2>
                 <p class="section-desc">Let's connect and explore the wonders of physics and mathematics together.</p>
             </div>
             <div class="contact-container">
@@ -475,13 +425,13 @@ nav a {
                         <p><strong>Location:</strong> Karnataka, India</p>
                     </div>
                     <div class="social-links">
-                        <a href="#" class="social-link">
+                        <a href="https://www.linkedin.com/in/pavan-gaonkar-07a0972bb/" class="social-link" aria-label="LinkedIn">
                             <span>in</span>
                         </a>
-                        <a href="#" class="social-link">
+                        <a href="#" class="social-link" aria-label="GitHub">
                             <span>GH</span>
                         </a>
-                        <a href="#" class="social-link">
+                        <a href="#" class="social-link" aria-label="Twitter">
                             <span>TW</span>
                         </a>
                     </div>
@@ -492,10 +442,8 @@ nav a {
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Show the about section by default
             showSection('about');
             
-            // Add event listeners to navigation links
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -506,84 +454,80 @@ nav a {
         });
         
         function showSection(id) {
-            // Hide all sections
             document.querySelectorAll('.section').forEach(section => {
                 section.style.display = 'none';
             });
             
-            // Show the selected section
             const selectedSection = document.getElementById(id);
             if (selectedSection) {
                 selectedSection.style.display = 'block';
                 
-                // Force re-trigger of animation
                 selectedSection.style.animation = 'none';
-                selectedSection.offsetHeight; // Trigger reflow
+                selectedSection.offsetHeight;
                 selectedSection.style.animation = 'fadeInUp 0.5s forwards';
             }
         }
+
+        const canvas = document.getElementById('background');
+        const ctx = canvas.getContext('2d');
+
+        function setCanvasSize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        setCanvasSize();
+        window.addEventListener('resize', setCanvasSize);
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 2 - 1;
+                this.speedY = Math.random() * 2 - 1;
+                this.color = `rgba(100, 255, ${Math.floor(Math.random() * 155 + 100)}, ${Math.random() * 0.5 + 0.1})`;
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
+                if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
+            }
+            
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        let particles = [];
+        function initParticles() {
+            particles = [];
+            const particleCount = Math.min(100, Math.floor((canvas.width * canvas.height) / 10000));
+            for (let i = 0; i < particleCount; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                particles.push(new Particle(x, y));
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        initParticles();
+        animate();
+        
+        window.addEventListener('resize', initParticles);
     </script>
-<script src="animations.js"></script>
-<script src="particles.js"></script>
-<script src="aboutParticles.js"></script>
-<script>
-    const canvas = document.getElementById('background');
-    const ctx = canvas.getContext('2d');
-
-    function setCanvasSize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    
-    setCanvasSize();
-    window.addEventListener('resize', setCanvasSize);
-
-    class Particle {
-        constructor(x, y) {
-            this.x = x;
-            this.y = y;
-            this.size = Math.random() * 2 + 1;
-            this.speedX = Math.random() * 2 - 1;
-            this.speedY = Math.random() * 2 - 1;
-            this.color = `rgba(100, 255, ${Math.floor(Math.random() * 155 + 100)}, ${Math.random() * 0.5 + 0.1})`;
-        }
-        
-        update() {
-            this.x += this.speedX;
-            this.y += this.speedY;
-            if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
-            if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
-        }
-        
-        draw() {
-            ctx.fillStyle = this.color;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-        }
-    }
-
-    let particles = [];
-    function initParticles() {
-        const particleCount = Math.floor((canvas.width * canvas.height) / 10000);
-        for (let i = 0; i < particleCount; i++) {
-            const x = Math.random() * canvas.width;
-            const y = Math.random() * canvas.height;
-            particles.push(new Particle(x, y));
-        }
-    }
-
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => {
-            p.update();
-            p.draw();
-        });
-        requestAnimationFrame(animate);
-    }
-
-    initParticles();
-    animate();
-</script>
 </body>
 </html>
