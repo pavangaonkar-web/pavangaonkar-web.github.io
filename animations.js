@@ -1,4 +1,4 @@
-// Text typing animation and other visual effects
+// animations.js - Text animations and UI interactions
 document.addEventListener('DOMContentLoaded', function() {
     // Typing animation for the header
     const typingText = document.getElementById('typing-text');
@@ -15,11 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
             cursor.className = 'cursor';
             cursor.textContent = '|';
             element.appendChild(cursor);
-            
-            // Blink cursor
-            setInterval(() => {
-                cursor.style.opacity = cursor.style.opacity === '0' ? '1' : '0';
-            }, 500);
         }
     }
     
@@ -29,23 +24,29 @@ document.addEventListener('DOMContentLoaded', function() {
         typeText(textToType, typingText);
     }, 500);
     
-    // Add smooth scroll behavior for navigation links
-    document.querySelectorAll('nav a').forEach(link => {
+    // Show the about section by default
+    showSection('about');
+    
+    // Add event listeners to navigation links
+    document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const targetId = this.getAttribute('href').substring(1);
-            const targetElement = document.getElementById(targetId);
             
-            if (targetElement) {
-                // Smooth scroll to the target element
-                window.scrollTo({
-                    top: targetElement.offsetTop - 100,
-                    behavior: 'smooth'
-                });
-                
-                // Show the section
-                showSection(targetId);
-            }
+            // Update active link
+            document.querySelectorAll('.nav-link').forEach(navLink => {
+                navLink.classList.remove('active');
+            });
+            this.classList.add('active');
+            
+            // Show the section and scroll to it
+            showSection(targetId);
+            
+            // Smooth scroll to the target element
+            window.scrollTo({
+                top: document.getElementById(targetId).offsetTop - 100,
+                behavior: 'smooth'
+            });
         });
     });
     
@@ -80,23 +81,23 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial check and add scroll event listener
     checkScroll();
     window.addEventListener('scroll', checkScroll);
-    
-    // Add some CSS for the cursor
-    const style = document.createElement('style');
-    style.textContent = `
-        .cursor {
-            font-weight: 100;
-            animation: blink 1s infinite;
-        }
-        
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-        
-        .section-title {
-            transition: transform 0.3s, color 0.3s;
-        }
-    `;
-    document.head.appendChild(style);
 });
+
+// Function to show selected section and hide others
+function showSection(id) {
+    // Hide all sections
+    document.querySelectorAll('.section').forEach(section => {
+        section.style.display = 'none';
+    });
+    
+    // Show the selected section
+    const selectedSection = document.getElementById(id);
+    if (selectedSection) {
+        selectedSection.style.display = 'block';
+        
+        // Force re-trigger of animation
+        selectedSection.style.animation = 'none';
+        selectedSection.offsetHeight; // Trigger reflow
+        selectedSection.style.animation = 'fadeInUp 0.5s forwards';
+    }
+}
