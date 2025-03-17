@@ -1,103 +1,138 @@
-// animations.js - Text animations and UI interactions
-document.addEventListener('DOMContentLoaded', function() {
-    // Typing animation for the header
-    const typingText = document.getElementById('typing-text');
-    const textToType = "Pavan Gaonkar";
-    const typingSpeed = 100; // milliseconds per character
-    
-    function typeText(text, element, index = 0) {
-        if (index < text.length) {
-            element.textContent += text.charAt(index);
-            setTimeout(() => typeText(text, element, index + 1), typingSpeed);
-        } else {
-            // Add blinking cursor effect after typing is complete
-            const cursor = document.createElement('span');
-            cursor.className = 'cursor';
-            cursor.textContent = '|';
-            element.appendChild(cursor);
-        }
-    }
-    
-    // Start typing animation with a short delay
-    setTimeout(() => {
-        typingText.textContent = '';
-        typeText(textToType, typingText);
-    }, 500);
-    
-    // Show the about section by default
-    showSection('about');
-    
-    // Add event listeners to navigation links
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
-            
-            // Update active link
-            document.querySelectorAll('.nav-link').forEach(navLink => {
-                navLink.classList.remove('active');
-            });
-            this.classList.add('active');
-            
-            // Show the section and scroll to it
-            showSection(targetId);
-            
-            // Smooth scroll to the target element
-            window.scrollTo({
-                top: document.getElementById(targetId).offsetTop - 100,
-                behavior: 'smooth'
-            });
-        });
-    });
-    
-    // Add hover effect to section titles
-    document.querySelectorAll('.section-title').forEach(title => {
-        title.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-5px)';
-            this.style.color = 'var(--primary)';
-        });
-        
-        title.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
-            this.style.color = '';
-        });
-    });
-    
-    // Add fade-in effect when scrolling
-    const sections = document.querySelectorAll('.section');
-    
-    function checkScroll() {
-        sections.forEach(section => {
-            const sectionTop = section.getBoundingClientRect().top;
-            const windowHeight = window.innerHeight;
-            
-            if (sectionTop < windowHeight * 0.75) {
-                section.style.opacity = '1';
-                section.style.transform = 'translateY(0)';
-            }
-        });
-    }
-    
-    // Initial check and add scroll event listener
-    checkScroll();
-    window.addEventListener('scroll', checkScroll);
-});
+import { useEffect, useRef, useState } from 'react';
 
-// Function to show selected section and hide others
-function showSection(id) {
-    // Hide all sections
-    document.querySelectorAll('.section').forEach(section => {
-        section.style.display = 'none';
+const ParticleBackground = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const particlesRef = useRef<Particle[]>([]);
+  const animationFrameRef = useRef<number>();
+
+  // Particle class for the animation
+  class Particle {
+    x: number;
+    y: number;
+    size: number;
+    speedX: number;
+    speedY: number;
+    color: string;
+
+    constructor(x: number, y: number) {
+      this.x = x;
+      this.y = y;
+      this.size = Math.random() * 2 + 1;
+      this.speedX = Math.random() * 1 - 0.5;
+      this.speedY = Math.random() * 1 - 0.5;
+      this.color = `rgba(129, 140, 248, ${Math.random() * 0.5 + 0.1})`;
+    }
+
+    update(mouseX: number, mouseY: number) {
+      this.x += this.speedX;
+      this.y += this.speedY;
+
+      // Bounce off edges
+      if (this.x > window.innerWidth || this.x < 0) this.speedX = -this.speedX;
+      if (this.y > window.innerHeight || this.y < 0) this.speedY = -this.speedY;
+
+      // Mouse interactivity - gentle attraction
+      const dx = mouseX - this.x;
+      const dy = mouseY - this.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      
+      if (distance < 100) {
+        this.x += dx * 0.02;
+        this.y += dy * 0.02;
+      }
+    }
+
+    draw(ctx: CanvasRenderingContext2D) {
+      ctx.fillStyle = this.color;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  const initParticles = () => {
+    if (!canvasRef.current) return;
+    
+    const canvas = canvasRef.current;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    particlesRef.current = [];
+    const particleCount = Math.min(100, Math.floor((canvas.width * canvas.height) / 10000));
+    
+    for (let i = 0; i < particleCount; i++) {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height;
+      particlesRef.current.push(new Particle(x, y));
+    }
+  };
+
+  const handleMouseMove = (e: MouseEvent) => {
+    setMousePosition({ x: e.clientX, y: e.clientY });
+  };
+
+  const animate = () => {
+    if (!canvasRef.current) return;
+    
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Update and draw particles
+    particlesRef.current.forEach(particle => {
+      particle.update(mousePosition.x, mousePosition.y);
+      particle.draw(ctx);
     });
     
-    // Show the selected section
-    const selectedSection = document.getElementById(id);
-    if (selectedSection) {
-        selectedSection.style.display = 'block';
+    // Draw connections between close particles
+    ctx.strokeStyle = 'rgba(129, 140, 248, 0.1)';
+    ctx.lineWidth = 0.5;
+    
+    for (let i = 0; i < particlesRef.current.length; i++) {
+      for (let j = i + 1; j < particlesRef.current.length; j++) {
+        const dx = particlesRef.current[i].x - particlesRef.current[j].x;
+        const dy = particlesRef.current[i].y - particlesRef.current[j].y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
         
-        // Force re-trigger of animation
-        selectedSection.style.animation = 'none';
-        selectedSection.offsetHeight; // Trigger reflow
-        selectedSection.style.animation = 'fadeInUp 0.5s forwards';
+        if (distance < 120) {
+          // Adjust opacity based on distance
+          ctx.strokeStyle = `rgba(129, 140, 248, ${0.2 - (distance/120) * 0.2})`;
+          ctx.beginPath();
+          ctx.moveTo(particlesRef.current[i].x, particlesRef.current[i].y);
+          ctx.lineTo(particlesRef.current[j].x, particlesRef.current[j].y);
+          ctx.stroke();
+        }
+      }
     }
-}
+    
+    animationFrameRef.current = requestAnimationFrame(animate);
+  };
+
+  useEffect(() => {
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('resize', initParticles);
+    
+    initParticles();
+    animate();
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', initParticles);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <canvas 
+      ref={canvasRef} 
+      className="fixed top-0 left-0 w-full h-full -z-10 bg-slate-950"
+    />
+  );
+};
+
+export default ParticleBackground;
