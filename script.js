@@ -152,3 +152,41 @@ window.addEventListener('load', () => {
         showSection(hash);
     }
 });
+// Function to handle smooth section transitions
+function handleSectionTransitions() {
+  const sections = document.querySelectorAll('.section');
+  
+  // Initialize Intersection Observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      // Add 'visible' class when section is in viewport
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, {
+    threshold: 0.1 // Trigger when at least 10% of the element is visible
+  });
+  
+  // Observe all sections
+  sections.forEach(section => {
+    observer.observe(section);
+  });
+}
+
+// Call this function when the DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  handleSectionTransitions();
+});
+
+// You likely already have code for handling nav clicks, but ensure it's smooth
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const targetId = link.getAttribute('href');
+    const targetSection = document.querySelector(targetId);
+    
+    // Smooth scroll to the section
+    targetSection.scrollIntoView({ behavior: 'smooth' });
+  });
+});
