@@ -1,13 +1,14 @@
 /* Base Styles */
 :root {
-  --primary-color: #3a4f63;
-  --secondary-color: #2a3f53;
-  --accent-color: #60a3bc;
-  --text-color: #333;
-  --light-text: #f8f9fa;
-  --background-color: #f5f5f5;
-  --card-bg: #ffffff;
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --primary-color: #7B68EE; /* Soft purple */
+  --secondary-color: #9370DB; /* Medium purple */
+  --accent-color: #00B4D8; /* Bright cyan for contrast */
+  --text-color: #E0E0E0; /* Light gray text */
+  --muted-text: #A0A0A0; /* Muted gray text */
+  --background-color: #121212; /* Matte black background */
+  --card-bg: #1E1E1E; /* Slightly lighter than background */
+  --hover-bg: #2A2A2A; /* Hover background */
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* Darker shadow */
   --transition: all 0.3s ease;
 }
 
@@ -33,18 +34,19 @@ body {
   z-index: -1;
   width: 100%;
   height: 100%;
-  opacity: 0.3;
+  opacity: 0.15; /* Reduced opacity for dark theme */
 }
 
 /* Header Styles */
 header {
   position: sticky;
   top: 0;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(18, 18, 18, 0.95); /* Dark with transparency */
   box-shadow: var(--shadow);
   padding: 1rem 0;
   z-index: 100;
   backdrop-filter: blur(5px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .header-content {
@@ -60,6 +62,7 @@ header h1 {
   font-size: 1.8rem;
   font-weight: 600;
   color: var(--primary-color);
+  text-shadow: 0 0 10px rgba(123, 104, 238, 0.2);
 }
 
 nav ul {
@@ -79,7 +82,7 @@ nav ul {
 
 .nav-link:hover {
   color: var(--accent-color);
-  background-color: rgba(96, 163, 188, 0.1);
+  background-color: rgba(0, 180, 216, 0.1);
 }
 
 /* Content Sections */
@@ -112,6 +115,7 @@ nav ul {
   max-width: 100%;
   border-radius: 10px;
   box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .about-text {
@@ -121,6 +125,7 @@ nav ul {
 .about-text p {
   margin-bottom: 1rem;
   font-size: 1.05rem;
+  color: var(--text-color);
 }
 
 /* CV Section Styles */
@@ -134,6 +139,7 @@ nav ul {
   margin: 0 auto;
   position: relative;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .cv-container::before {
@@ -177,13 +183,13 @@ nav ul {
   text-decoration: none;
   font-weight: 600;
   transition: var(--transition);
-  box-shadow: 0 4px 15px rgba(58, 79, 99, 0.3);
+  box-shadow: 0 4px 15px rgba(123, 104, 238, 0.3);
 }
 
 .download-button:hover {
   background-color: var(--secondary-color);
   transform: translateY(-3px);
-  box-shadow: 0 6px 18px rgba(58, 79, 99, 0.4);
+  box-shadow: 0 6px 18px rgba(123, 104, 238, 0.4);
 }
 
 .button-icon {
@@ -201,6 +207,7 @@ nav ul {
   background-color: var(--card-bg);
   border-radius: 12px;
   box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .empty-icon {
@@ -213,6 +220,7 @@ nav ul {
   font-size: 1.1rem;
   max-width: 600px;
   margin: 0 auto 1rem;
+  color: var(--text-color);
 }
 
 /* Contact Section */
@@ -223,6 +231,7 @@ nav ul {
   box-shadow: var(--shadow);
   max-width: 800px;
   margin: 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .contact-item {
@@ -241,6 +250,7 @@ nav ul {
 
 .contact-item a:hover {
   text-decoration: underline;
+  color: var(--primary-color);
 }
 
 .social-links {
@@ -266,6 +276,7 @@ nav ul {
 .social-link:hover {
   background-color: var(--accent-color);
   transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 180, 216, 0.4);
 }
 
 /* Mobile Responsiveness */
@@ -441,10 +452,32 @@ nav ul {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--accent-color);
+  background: var(--primary-color);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-color);
+  background: var(--accent-color);
+}
+
+/* Add subtle cosmic/quantum particle animation for background */
+@keyframes particle-float {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(0) rotate(360deg);
+    opacity: 0.8;
+  }
+}
+
+/* Add subtle glow effect to cards on hover */
+.cv-container:hover, .contact-container:hover, .empty-state:hover {
+  box-shadow: 0 8px 24px rgba(123, 104, 238, 0.15);
+  transition: box-shadow 0.4s ease;
 }
