@@ -4,6 +4,10 @@ const ctx = canvas.getContext('2d');
 const navLinks = document.querySelectorAll('.nav-link');
 const sections = document.querySelectorAll('.section');
 
+// Particles array
+let particles = [];
+let mousePosition = { x: undefined, y: undefined };
+
 // Initialize page when DOM content is loaded
 document.addEventListener('DOMContentLoaded', () => {
     setupNavigation();
@@ -80,10 +84,11 @@ class Particle {
         this.size = Math.random() * 2 + 1;
         this.speedX = Math.random() * 1 - 0.5; // Reduced speed for smoother motion
         this.speedY = Math.random() * 1 - 0.5; // Reduced speed for smoother motion
-        this.color = `rgba(100, 255, ${Math.floor(Math.random() * 155 + 100)}, ${Math.random() * 0.5 + 0.1})`;
+        // Create blue-cyan color variations
+        this.color = `rgba(100, ${Math.floor(Math.random() * 155 + 100)}, 255, ${Math.random() * 0.5 + 0.2})`;
     }
     
-    update(mouseX, mouseY) {
+    update() {
         this.x += this.speedX;
         this.y += this.speedY;
         
@@ -97,14 +102,19 @@ class Particle {
         }
         
         // Add mouse interaction if coordinates are provided
-        if (mouseX && mouseY) {
-            const dx = mouseX - this.x;
-            const dy = mouseY - this.y;
+        if (mousePosition.x && mousePosition.y) {
+            const dx = mousePosition.x - this.x;
+            const dy = mousePosition.y - this.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
             
             if (distance < 100) {
-                this.x += dx * 0.02;
-                this.y += dy * 0.02;
+                // Push particles away from mouse
+                const forceDirectionX = dx / distance;
+                const forceDirectionY = dy / distance;
+                const force = (100 - distance) / 100;
+                
+                this.x -= forceDirectionX * force * 2;
+                this.y -= forceDirectionY * force * 2;
             }
         }
     }
@@ -123,8 +133,6 @@ function setupCanvas() {
     setCanvasSize();
     
     // Add mouse tracking for particle interaction
-    let mousePosition = { x: undefined, y: undefined };
-    
     canvas.addEventListener('mousemove', (e) => {
         mousePosition.x = e.x;
         mousePosition.y = e.y;
@@ -143,14 +151,10 @@ function setCanvasSize() {
     canvas.height = window.innerHeight;
 }
 
-// Particles array
-let particles = [];
-let mousePosition = { x: undefined, y: undefined };
-
 // Initialize particles based on screen size
 function initParticles() {
     particles = [];
-    const particleCount = Math.min(100, Math.floor((canvas.width * canvas.height) / 10000));
+    const particleCount = Math.floor((canvas.width * canvas.height) / 10000);
     
     for (let i = 0; i < particleCount; i++) {
         const x = Math.random() * canvas.width;
@@ -169,9 +173,13 @@ document.addEventListener('mousemove', (e) => {
 function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
+    // Create a dark blue background
+    ctx.fillStyle = '#0d1117';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
     // Update and draw all particles
     particles.forEach(particle => {
-        particle.update(mousePosition.x, mousePosition.y);
+        particle.update();
         particle.draw();
     });
     
@@ -190,9 +198,9 @@ function connectParticles() {
             const dy = particles[i].y - particles[j].y;
             const distance = Math.sqrt(dx * dx + dy * dy);
             
-            if (distance < 120) {
+            if (distance < 150) {
                 // Adjust opacity based on distance
-                ctx.strokeStyle = `rgba(100, 255, 200, ${0.2 - (distance/120) * 0.2})`;
+                ctx.strokeStyle = `rgba(100, 150, 255, ${0.2 - (distance/750)})`;
                 ctx.lineWidth = 0.5;
                 ctx.beginPath();
                 ctx.moveTo(particles[i].x, particles[i].y);
@@ -209,25 +217,4 @@ window.addEventListener('hashchange', () => {
     if (hash) {
         showSection(hash);
     }
-});
-
-// Add feature image to projects section
-function addSpinThumbnail() {
-    const projectsSection = document.querySelector('#projects .empty-state');
-    if (projectsSection) {
-        const spinImage = document.createElement('img');
-        spinImage.src = 'spin-thumbnail.jpg';
-        spinImage.alt = 'Project thumbnail';
-        spinImage.className = 'spin-thumbnail';
-        spinImage.style.maxWidth = '200px';
-        spinImage.style.borderRadius = '8px';
-        spinImage.style.margin = '20px auto';
-        spinImage.style.display = 'block';
-        projectsSection.appendChild(spinImage);
-    }
-}
-
-// Call this when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    addSpinThumbnail();
 });
