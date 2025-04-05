@@ -1,7 +1,7 @@
 // DOM elements
 const canvas = document.getElementById('background');
 const ctx = canvas.getContext('2d');
-const navLinks = document.querySelectorAll('.nav-link');
+const navLinks = document.querySelectorAll('.nav-link'); 
 const sections = document.querySelectorAll('.section');
 
 // Particles array
