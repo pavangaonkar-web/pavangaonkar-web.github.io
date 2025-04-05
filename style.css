@@ -76,3 +76,103 @@
         width: 100%;
     }
 }
+/* Update the download button - removing shine */
+.download-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 25px;
+    background: var(--primary); /* Solid color instead of gradient */
+    color: white;
+    border-radius: 50px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    /* Removed box-shadow to eliminate shine */
+}
+
+.download-button:hover {
+    transform: translateY(-3px);
+    background: var(--primary-dark); /* Darker solid color on hover */
+    /* Removed box-shadow */
+}
+
+/* Improve section buttons in mobile view */
+@media (max-width: 480px) {
+    /* Adjust header for better mobile view */
+    header {
+        padding: 40px 15px 20px;
+    }
+    
+    .header-content {
+        padding: 0 10px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+        padding: 5px 10px;
+    }
+    
+    /* Navigation styling */
+    nav {
+        margin-top: 20px;
+        width: 100%;
+    }
+    
+    nav ul {
+        display: flex;
+        flex-direction: row; /* Keep horizontal layout */
+        flex-wrap: wrap; /* Allow wrapping */
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+    }
+    
+    nav ul li {
+        margin: 5px;
+    }
+    
+    nav a {
+        font-size: 0.95rem;
+        padding: 8px 12px;
+        display: inline-block;
+        text-align: center;
+        border-radius: 8px;
+        background-color: rgba(26, 31, 42, 0.8); /* Semi-transparent background */
+        color: var(--white);
+    }
+    
+    nav a:hover {
+        background-color: rgba(0, 188, 212, 0.2); /* Light background on hover */
+        color: var(--primary);
+    }
+    
+    /* Keep the underline animation for consistent experience */
+    nav a::after {
+        bottom: 2px;
+        height: 2px;
+    }
+    
+    nav a.active {
+        background-color: rgba(0, 188, 212, 0.3); /* Highlight active link */
+        color: var(--primary);
+    }
+}
+
+/* Additional adjustment for very small screens */
+@media (max-width: 360px) {
+    nav ul {
+        flex-direction: column; /* Switch to vertical on very small screens */
+        align-items: center;
+    }
+    
+    nav ul li {
+        width: 90%;
+    }
+    
+    nav a {
+        display: block;
+        width: 100%;
+        padding: 10px 0;
+    }
+}
