@@ -452,3 +452,38 @@ nav ul {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-color);
 }
+.cv-download-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.cv-download-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(107, 142, 251, 0.3);
+  transition: all 0.3s ease;
+}
+
+.cv-download-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(107, 142, 251, 0.4);
+}
+
+.cv-download-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(107, 142, 251, 0.3);
+}
+
+.cv-icon {
+  width: 24px;
+  height: 24px;
+}
