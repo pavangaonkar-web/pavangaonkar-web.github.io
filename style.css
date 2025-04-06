@@ -1,13 +1,14 @@
+
 /* Base Styles */
 :root {
   --primary-color: #3a4f63;
   --secondary-color: #2a3f53;
   --accent-color: #60a3bc;
-  --text-color: #333;
+  --text-color: #f5f5f5; /* Updated for better contrast on dark background */
   --light-text: #f8f9fa;
-  --background-color: #f5f5f5;
-  --card-bg: #ffffff;
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --background-color: #121212; /* Changed to black */
+  --card-bg: #1e1e1e; /* Darker card background to match dark theme */
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Adjusted shadow for dark theme */
   --transition: all 0.3s ease;
 }
 
@@ -33,14 +34,14 @@ body {
   z-index: -1;
   width: 100%;
   height: 100%;
-  opacity: 0.3;
+  opacity: 0.2; /* Reduced opacity for dark theme */
 }
 
 /* Header Styles */
 header {
   position: sticky;
   top: 0;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(30, 30, 30, 0.95); /* Darker header for dark theme */
   box-shadow: var(--shadow);
   padding: 1rem 0;
   z-index: 100;
@@ -59,7 +60,7 @@ header {
 header h1 {
   font-size: 1.8rem;
   font-weight: 600;
-  color: var(--primary-color);
+  color: var(--accent-color); /* Changed to accent color for better visibility */
 }
 
 nav ul {
@@ -69,7 +70,7 @@ nav ul {
 }
 
 .nav-link {
-  color: var(--text-color);
+  color: var(--light-text);
   text-decoration: none;
   font-weight: 500;
   transition: var(--transition);
@@ -79,7 +80,7 @@ nav ul {
 
 .nav-link:hover {
   color: var(--accent-color);
-  background-color: rgba(96, 163, 188, 0.1);
+  background-color: rgba(96, 163, 188, 0.2);
 }
 
 /* Content Sections */
@@ -147,7 +148,7 @@ nav ul {
 }
 
 .cv-container h2 {
-  color: var(--primary-color);
+  color: var(--accent-color);
   font-size: 2.5rem;
   margin-bottom: 1.5rem;
   font-weight: 600;
@@ -192,6 +193,37 @@ nav ul {
 
 .button-text {
   font-size: 1.1rem;
+}
+
+/* Project Section - Remove image styles */
+.project-container {
+  background-color: var(--card-bg);
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.project-text {
+  width: 100%; /* Take full width since image is removed */
+}
+
+.project-text h3 {
+  color: var(--accent-color);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.project-tag {
+  display: inline-block;
+  background-color: rgba(96, 163, 188, 0.2);
+  color: var(--accent-color);
+  padding: 0.3rem 0.8rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 /* Empty State Styling */
@@ -243,30 +275,7 @@ nav ul {
   text-decoration: underline;
 }
 
-.social-links {
-  display: flex;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.social-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 45px;
-  height: 45px;
-  background-color: var(--primary-color);
-  color: white;
-  border-radius: 50%;
-  text-decoration: none;
-  font-weight: 600;
-  transition: var(--transition);
-}
-
-.social-link:hover {
-  background-color: var(--accent-color);
-  transform: translateY(-3px);
-}
+/* Removed social-links section since GitHub and Twitter buttons should be removed */
 
 /* Mobile Responsiveness */
 @media (max-width: 1024px) {
@@ -286,7 +295,7 @@ nav ul {
     flex: 0 0 250px;
   }
   
-  .cv-container, .contact-container {
+  .cv-container, .contact-container, .project-container {
     padding: 2.5rem;
   }
 }
@@ -325,7 +334,7 @@ nav ul {
     margin-bottom: 1.5rem;
   }
   
-  .cv-container {
+  .cv-container, .project-container {
     padding: 2rem 1.5rem;
   }
   
@@ -372,7 +381,7 @@ nav ul {
     font-size: 0.95rem;
   }
   
-  .cv-container {
+  .cv-container, .project-container {
     padding: 1.75rem 1rem;
   }
   
@@ -407,11 +416,6 @@ nav ul {
   
   .contact-item p {
     font-size: 0.95rem;
-  }
-  
-  .social-link {
-    width: 40px;
-    height: 40px;
   }
 }
 
