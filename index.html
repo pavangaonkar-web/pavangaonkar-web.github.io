@@ -29,7 +29,7 @@
         <section id="about" class="section active">
             <div class="about-container">
                 <div class="profile-img-container">
-                    <img src="/api/placeholder/400/320" alt="Pavan Gaonkar" loading="lazy">
+                    <img src="profile.js.png" alt="Pavan Gaonkar" loading="lazy" onerror="this.src='/api/placeholder/400/320'">
                 </div>
                 <div class="about-text">
                     <h2>About Me</h2>
@@ -158,6 +158,13 @@
             const navLinks = document.querySelectorAll('.nav-link');
             const sections = document.querySelectorAll('.section');
             
+            // Fix: Prevent scrolling to the bottom on page load
+            if (window.location.hash) {
+                setTimeout(function() {
+                    window.scrollTo(0, 0);
+                }, 1);
+            }
+            
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -171,8 +178,11 @@
                     sections.forEach(section => section.classList.remove('active'));
                     document.getElementById(targetSection).classList.add('active');
                     
-                    // Update URL hash
-                    window.location.hash = targetSection;
+                    // Update URL hash and prevent scroll
+                    history.pushState(null, null, '#' + targetSection);
+                    
+                    // Ensure we're at the top of the page
+                    window.scrollTo(0, 0);
                 });
             });
             
@@ -187,6 +197,11 @@
                     // Show target section
                     sections.forEach(section => section.classList.remove('active'));
                     document.getElementById(hash).classList.add('active');
+                    
+                    // Ensure we're at the top of the page
+                    setTimeout(function() {
+                        window.scrollTo(0, 0);
+                    }, 100);
                 }
             }
         });
@@ -201,6 +216,9 @@
                 cvFrame.classList.remove('active');
                 cvFallback.style.display = 'flex';
             });
+            
+            // Additional check to make sure we're at the top
+            window.scrollTo(0, 0);
         });
     </script>
 </body>
