@@ -1,339 +1,181 @@
-// Main script for Pavan Gaonkar's portfolio website
-'use strict';
-
-// DOM elements
-const canvas = document.getElementById('background');
-const ctx = canvas.getContext('2d');
-const navLinks = document.querySelectorAll('.nav-link');
-const sections = document.querySelectorAll('.section');
-const currentYearElement = document.getElementById('current-year');
-
-// Global variables
-let particles = [];
-let mousePosition = { x: undefined, y: undefined };
-let animationId = null;
-let isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-// Initialize page when DOM content is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    setupNavigation();
-    setupCanvas();
+// DOM Elements
+document.addEventListener('DOMContentLoaded', function() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('.section');
+    const cvIframe = document.getElementById('cv-iframe');
+    const cvFrame = document.querySelector('.cv-frame');
+    const cvFallback = document.querySelector('.cv-fallback');
+    const yearEl = document.getElementById('current-year');
+    const headerTitle = document.querySelector('header h1');
     
-    if (!isReducedMotion) {
-        initParticles();
-        animate();
-    } else {
-        // Simple static background for reduced motion preference
-        drawStaticBackground();
-    }
+    // Update copyright year
+    yearEl.textContent = new Date().getFullYear();
     
-    // Update footer year
-    currentYearElement.textContent = new Date().getFullYear();
-    
-    // Show the initial section (about)
-    const hash = window.location.hash.substring(1);
-    showSection(hash || 'about');
-});
-
-// Handle navigation clicks with smooth transitions
-function setupNavigation() {
+    // Navigation functionality
     navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
+        link.addEventListener('click', function(e) {
             e.preventDefault();
-            const sectionId = link.getAttribute('data-section');
             
-            // First update the active navigation item
-            updateActiveNav(sectionId);
+            // Get the section ID from data attribute
+            const sectionId = this.getAttribute('data-section');
             
-            // Then show the section with animation
-            showSection(sectionId);
+            // Remove active class from all links and sections
+            navLinks.forEach(el => el.classList.remove('active'));
+            sections.forEach(el => el.classList.remove('active'));
             
-            // Update URL without page jump
-            history.pushState(null, null, `#${sectionId}`);
+            // Add active class to current link and section
+            this.classList.add('active');
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update URL hash
+            window.location.hash = sectionId;
         });
     });
     
-    // Add active class to nav links based on scroll position
-    if (!isReducedMotion) {
-        window.addEventListener('scroll', throttle(updateNavOnScroll, 100));
-    }
-}
-
-// Show selected section with smooth transition
-function showSection(id) {
-    // If id doesn't exist, default to about
-    if (!document.getElementById(id)) {
-        id = 'about';
-    }
-    
-    // First transition out all sections
-    sections.forEach(section => {
-        section.classList.remove('active');
-        section.style.display = 'none';
-    });
-    
-    // Then show and transition in the selected section
-    const selectedSection = document.getElementById(id);
-    if (selectedSection) {
-        // Set display to block first
-        selectedSection.style.display = 'block';
+    // Handle page load with hash
+    function handleHashChange() {
+        const hash = window.location.hash.substring(1) || 'about';
+        const targetSection = document.getElementById(hash);
         
-        // Force a reflow to ensure the transition will work
-        selectedSection.offsetHeight;
-        
-        // Then add the active class for the animation
-        setTimeout(() => {
-            selectedSection.classList.add('active');
-        }, 10);
+        if (targetSection) {
+            // Deactivate all sections and links
+            sections.forEach(section => section.classList.remove('active'));
+            navLinks.forEach(link => link.classList.remove('active'));
+            
+            // Activate target section and corresponding link
+            targetSection.classList.add('active');
+            const targetLink = document.querySelector(`.nav-link[data-section="${hash}"]`);
+            if (targetLink) {
+                targetLink.classList.add('active');
+            }
+        }
     }
     
-    // Update navigation
-    updateActiveNav(id);
-}
-
-// Update active navigation link
-function updateActiveNav(sectionId) {
+    // Initialize page based on hash or default to 'about'
+    handleHashChange();
+    
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    
+    // Check if CV PDF exists and show appropriate view
+    function checkCVAvailability() {
+        fetch('pavan_cv.pdf', { method: 'HEAD' })
+            .then(response => {
+                if (response.ok) {
+                    // PDF exists, show iframe
+                    cvFrame.classList.add('active');
+                    cvFallback.style.display = 'none';
+                } else {
+                    // PDF does not exist, show fallback
+                    cvFrame.classList.remove('active');
+                    cvFallback.style.display = 'flex';
+                }
+            })
+            .catch(error => {
+                // Error, show fallback
+                cvFrame.classList.remove('active');
+                cvFallback.style.display = 'flex';
+                console.error('Error checking CV availability:', error);
+            });
+    }
+    
+    // Check CV availability when CV section is activated
     navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('data-section') === sectionId) {
-            link.classList.add('active');
-        }
-    });
-}
-
-// Update navigation based on scroll position
-function updateNavOnScroll() {
-    const scrollPosition = window.scrollY;
-    
-    // Find the current section
-    let currentSection = '';
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-        
-        if (scrollPosition >= sectionTop - 100 && 
-            scrollPosition < sectionTop + sectionHeight - 100) {
-            currentSection = section.getAttribute('id');
+        if (link.getAttribute('data-section') === 'cv') {
+            link.addEventListener('click', checkCVAvailability);
         }
     });
     
-    // Update active nav
-    if (currentSection) {
-        updateActiveNav(currentSection);
-    }
-}
-
-// Throttle function to limit how often a function runs
-function throttle(callback, delay) {
-    let lastCall = 0;
-    return function(...args) {
-        const now = new Date().getTime();
-        if (now - lastCall < delay) {
-            return;
-        }
-        lastCall = now;
-        return callback(...args);
-    };
-}
-
-// Particle class for background animation
-class Particle {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.size = Math.random() * 2 + 0.5; // Slightly smaller particles for better performance
-        this.speedX = Math.random() * 0.5 - 0.25; // Reduced speed for smoother motion
-        this.speedY = Math.random() * 0.5 - 0.25; // Reduced speed for smoother motion
-        this.color = `rgba(100, 255, ${Math.floor(Math.random() * 155 + 100)}, ${Math.random() * 0.5 + 0.1})`;
+    // If CV section is active on page load, check availability
+    if (window.location.hash === '#cv') {
+        checkCVAvailability();
     }
     
-    update(mouseX, mouseY) {
-        // Add slight movement even without mouse interaction
-        this.x += this.speedX;
-        this.y += this.speedY;
-        
-        // Bounce off edges
-        if (this.x > canvas.width || this.x < 0) {
-            this.speedX = -this.speedX;
+    // Handle mobile navigation
+    function adjustNavigation() {
+        if (window.innerWidth <= 768) {
+            // Add touch-friendly behavior for mobile if needed
+            // This is where you would add mobile menu toggle functionality
+            // if you decide to implement a hamburger menu in the future
         }
-        
-        if (this.y > canvas.height || this.y < 0) {
-            this.speedY = -this.speedY;
-        }
-        
-        // Add mouse interaction if coordinates are provided
-        if (mouseX && mouseY) {
-            const dx = mouseX - this.x;
-            const dy = mouseY - this.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
+    }
+    
+    // Run on page load and window resize
+    adjustNavigation();
+    window.addEventListener('resize', adjustNavigation);
+    
+    // Fix header title underline position based on screen width
+    function adjustHeaderUnderline() {
+        if (headerTitle) {
+            // Get the computed styles
+            const titleWidth = headerTitle.offsetWidth;
+            const headerStyles = window.getComputedStyle(headerTitle, '::after');
             
-            // Influence particles within range
-            if (distance < 100) {
-                // Subtle push effect
-                const angle = Math.atan2(dy, dx);
-                const pushX = Math.cos(angle) * 0.05;
-                const pushY = Math.sin(angle) * 0.05;
+            // For mobile screens (centered title)
+            if (window.innerWidth <= 768) {
+                // Apply custom styles for the underline on mobile
+                headerTitle.style.position = 'relative';
                 
-                this.x += pushX;
-                this.y += pushY;
+                // Create or update the underline element
+                let underline = headerTitle.querySelector('.title-underline');
+                if (!underline) {
+                    underline = document.createElement('span');
+                    underline.className = 'title-underline';
+                    headerTitle.appendChild(underline);
+                }
+                
+                // Style the underline
+                underline.style.position = 'absolute';
+                underline.style.bottom = '-5px';
+                underline.style.left = '50%';
+                underline.style.transform = 'translateX(-50%)';
+                underline.style.width = '40px';
+                underline.style.height = '3px';
+                underline.style.backgroundColor = 'var(--secondary-color)';
+                underline.style.borderRadius = '3px';
+                underline.style.display = 'block';
+            } else {
+                // For desktop, use the CSS default
+                const underline = headerTitle.querySelector('.title-underline');
+                if (underline) {
+                    underline.remove();
+                }
+                headerTitle.style.position = '';
             }
         }
     }
     
-    draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-    }
-}
-
-// Setup canvas size
-function setupCanvas() {
-    // Set canvas size initially
-    setCanvasSize();
+    // Run the adjustment function
+    adjustHeaderUnderline();
+    window.addEventListener('resize', adjustHeaderUnderline);
     
-    // Add mouse tracking for particle interaction with debounce
-    canvas.addEventListener('mousemove', debounce((e) => {
-        mousePosition.x = e.clientX;
-        mousePosition.y = e.clientY;
-    }, 10));
-    
-    // Handle mouse leaving the canvas
-    canvas.addEventListener('mouseleave', () => {
-        mousePosition.x = undefined;
-        mousePosition.y = undefined;
-    });
-    
-    // Update canvas size on window resize with debounce
-    window.addEventListener('resize', debounce(() => {
-        setCanvasSize();
+    // Add basic loading state for iframe
+    if (cvIframe) {
+        cvIframe.addEventListener('load', function() {
+            this.style.opacity = 1;
+        });
         
-        if (!isReducedMotion) {
-            initParticles(); // Reinitialize particles when canvas size changes
-        } else {
-            drawStaticBackground(); // Redraw static background
-        }
-    }, 250));
-}
-
-// Debounce function to prevent excessive function calls
-function debounce(callback, delay) {
-    let timeout;
-    return function(...args) {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => callback(...args), delay);
-    };
-}
-
-// Set canvas dimensions
-function setCanvasSize() {
-    // Set to device pixel ratio for sharper rendering
-    const dpr = window.devicePixelRatio || 1;
-    canvas.width = window.innerWidth * dpr;
-    canvas.height = window.innerHeight * dpr;
-    
-    // Scale context for high DPI displays
-    ctx.scale(dpr, dpr);
-    
-    // Reset canvas visual size
-    canvas.style.width = `${window.innerWidth}px`;
-    canvas.style.height = `${window.innerHeight}px`;
-}
-
-// Initialize particles based on screen size
-function initParticles() {
-    particles = [];
-    // Adjust particle count for performance
-    const density = 0.00006; // Particles per pixel
-    const particleCount = Math.min(100, Math.floor((canvas.width * canvas.height) * density));
-    
-    for (let i = 0; i < particleCount; i++) {
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
-        particles.push(new Particle(x, y));
-    }
-}
-
-// Draw static background for reduced motion preference
-function drawStaticBackground() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = 'rgba(100, 255, 200, 0.05)';
-    
-    for (let i = 0; i < 50; i++) {
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
-        const size = Math.random() * 2 + 0.5;
-        
-        ctx.beginPath();
-        ctx.arc(x, y, size, 0, Math.PI * 2);
-        ctx.fill();
-    }
-}
-
-// Animation loop with requestAnimationFrame
-function animate() {
-    if (isReducedMotion) {
-        cancelAnimationFrame(animationId);
-        return;
+        cvIframe.style.opacity = 0;
+        cvIframe.style.transition = 'opacity 0.3s ease';
     }
     
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Update and draw all particles
-    particles.forEach(particle => {
-        particle.update(mousePosition.x, mousePosition.y);
-        particle.draw();
-    });
-    
-    // Draw connections between close particles for a network effect
-    connectParticles();
-    
-    // Continue animation loop
-    animationId = requestAnimationFrame(animate);
-}
-
-// Connect particles that are close to each other
-function connectParticles() {
-    const connectionDistance = 100; // Max distance for connection
-    
-    for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            
-            if (distance < connectionDistance) {
-                // Adjust opacity based on distance
-                const opacity = 0.15 * (1 - distance / connectionDistance);
-                ctx.strokeStyle = `rgba(100, 255, 200, ${opacity})`;
-                ctx.lineWidth = 0.5;
-                ctx.beginPath();
-                ctx.moveTo(particles[i].x, particles[i].y);
-                ctx.lineTo(particles[j].x, particles[j].y);
-                ctx.stroke();
+    // Optional: Add smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            // This is handled by the navigation system already
+            // but kept here for any other internal links
+            if (!this.classList.contains('nav-link')) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100, // Adjust for header
+                        behavior: 'smooth'
+                    });
+                }
             }
-        }
-    }
-}
-
-// Listen for reduced motion preference changes
-window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', () => {
-    isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
-    if (isReducedMotion) {
-        cancelAnimationFrame(animationId);
-        drawStaticBackground();
-    } else {
-        initParticles();
-        animate();
-    }
-});
-
-// Handle hash changes to navigate to proper section
-window.addEventListener('hashchange', () => {
-    const hash = window.location.hash.substring(1);
-    if (hash) {
-        showSection(hash);
-    }
+        });
+    });
 });
