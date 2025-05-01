@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Pavan Gaonkar">
+    <meta name="description" content="Pavan Gaonkar - Physics & Mathematics">
     <title>Pavan Gaonkar | Physics & Mathematics</title>
     <link rel="icon" type="image/png" href="favicon.ico">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
-    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="styles.css">
 </head> 
 <body> 
     <header>
@@ -29,16 +29,18 @@
         <section id="about" class="section active">
             <div class="about-container">
                 <div class="profile-img-container">
-                    <img src="profile.js.png" alt="Pavan Gaonkar" loading="lazy" onerror="this.src='/api/placeholder/400/320'">
+                    <img src="profile.jpg" alt="Pavan Gaonkar" loading="lazy" onerror="this.src='/api/placeholder/400/320'">
                 </div>
                 <div class="about-text">
                     <h2>About Me</h2>
-                    <p>Hey, I'm Pavan Gaonkar! I am very much fascinated by how the universe works in the most fundamental way. As a result I really like quantum mechanics and General theory of relativity. Although I haven't studied GTR yet, I plan to dive into it soon.</p>
-                    <p>Recently, I've also started developing a fascination for pure mathematics. What truly amazes me is how abstract mathematical concepts—ones that seem completely disconnected from reality, like linear algebra and differential geometry—end up having profound applications in physics. Take linear algebra, for instance. If you read Linear Algebra Done Right, you might wonder how such abstract ideas could ever be useful. But once you encounter quantum mechanics, you realize that without linear algebra, constructing quantum theory would be nearly impossible.</p>
-                    <p>I recently completed my undergraduate studies at Karnataka University, Dharwad, India. I love discussing deep ideas about the universe.</p>
-                    <p>Beyond physics, I enjoy reading S. L. Bhyrappa's novels, which offer profound insights into Indian philosophy and life. Stargazing has been a long-standing passion of mine, and I love spending time identifying stars and constellations.</p>
-                    <p>My long-term goal is to contribute original ideas to physics and possibly pursue a career in theoretical physics or academia.</p>
-                    <p>If you share a passion for physics, mathematics, philosophy, or the mysteries of the cosmos, I'd love to connect and exchange ideas!</p>
+                    <div class="text-reveal-container">
+                        <p class="reveal-text">Hey, I'm Pavan Gaonkar! I am very much fascinated by how the universe works in the most fundamental way. As a result I really like quantum mechanics and General theory of relativity. Although I haven't studied GTR yet, I plan to dive into it soon.</p>
+                        <p class="reveal-text">Recently, I've also started developing a fascination for pure mathematics. What truly amazes me is how abstract mathematical concepts—ones that seem completely disconnected from reality, like linear algebra and differential geometry—end up having profound applications in physics. Take linear algebra, for instance. If you read Linear Algebra Done Right, you might wonder how such abstract ideas could ever be useful. But once you encounter quantum mechanics, you realize that without linear algebra, constructing quantum theory would be nearly impossible.</p>
+                        <p class="reveal-text">I recently completed my undergraduate studies at Karnataka University, Dharwad, India. I love discussing deep ideas about the universe.</p>
+                        <p class="reveal-text">Beyond physics, I enjoy reading S. L. Bhyrappa's novels, which offer profound insights into Indian philosophy and life. Stargazing has been a long-standing passion of mine, and I love spending time identifying stars and constellations.</p>
+                        <p class="reveal-text">My long-term goal is to contribute original ideas to physics and possibly pursue a career in theoretical physics or academia.</p>
+                        <p class="reveal-text">If you share a passion for physics, mathematics, philosophy, or the mysteries of the cosmos, I'd love to connect and exchange ideas!</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -70,7 +72,7 @@
                         <div class="cv-loading-spinner"></div>
                     </div>
                     <div class="cv-frame active">
-                        <iframe id="cv-iframe" src="pavan_cv.pdf" title="Pavan Gaonkar's CV" onload="document.getElementById('cv-loading').style.display='none';"></iframe>
+                        <iframe id="cv-iframe" src="pavan_cv.pdf" title="Pavan Gaonkar's CV"></iframe>
                     </div>
                     <div class="cv-fallback">
                         <div class="cv-fallback-icon" aria-hidden="true">📄</div>
@@ -148,77 +150,6 @@
         </div>
     </footer>
 
-    <script>
-        // Update current year
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-        
-        // Navigation functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const navLinks = document.querySelectorAll('.nav-link');
-            const sections = document.querySelectorAll('.section');
-            
-            // Fix: Prevent scrolling to the bottom on page load
-            if (window.location.hash) {
-                setTimeout(function() {
-                    window.scrollTo(0, 0);
-                }, 1);
-            }
-            
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetSection = this.getAttribute('data-section');
-                    
-                    // Update active nav link
-                    navLinks.forEach(navLink => navLink.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Show target section
-                    sections.forEach(section => section.classList.remove('active'));
-                    document.getElementById(targetSection).classList.add('active');
-                    
-                    // Update URL hash and prevent scroll
-                    history.pushState(null, null, '#' + targetSection);
-                    
-                    // Ensure we're at the top of the page
-                    window.scrollTo(0, 0);
-                });
-            });
-            
-            // Handle initial hash if present
-            if(window.location.hash) {
-                const hash = window.location.hash.substring(1);
-                if(document.getElementById(hash)) {
-                    // Update active nav link
-                    navLinks.forEach(navLink => navLink.classList.remove('active'));
-                    document.querySelector(`.nav-link[data-section="${hash}"]`).classList.add('active');
-                    
-                    // Show target section
-                    sections.forEach(section => section.classList.remove('active'));
-                    document.getElementById(hash).classList.add('active');
-                    
-                    // Ensure we're at the top of the page
-                    setTimeout(function() {
-                        window.scrollTo(0, 0);
-                    }, 100);
-                }
-            }
-        });
-        
-        // CV display handler
-        document.addEventListener('DOMContentLoaded', function() {
-            const cvIframe = document.getElementById('cv-iframe');
-            const cvFallback = document.querySelector('.cv-fallback');
-            const cvFrame = document.querySelector('.cv-frame');
-            
-            cvIframe.addEventListener('error', function() {
-                cvFrame.classList.remove('active');
-                cvFallback.style.display = 'flex';
-            });
-            
-            // Additional check to make sure we're at the top
-            window.scrollTo(0, 0);
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
