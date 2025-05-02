@@ -1,5 +1,5 @@
 /* Dark theme with white text */  
-:root {
+:root { 
     --background-color: #0a0a0a;
     --text-color: #ffffff;
     --accent-color: #8a6eff;
