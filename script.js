@@ -29,7 +29,29 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Start the initial text reveal animation for the about section
   revealAboutText();
+  
+  // Check screen size and adjust as needed
+  adjustForMobileScreens();
+  
+  // Listen for window resize events
+  window.addEventListener('resize', adjustForMobileScreens);
 });
+
+// Handle mobile-specific adjustments
+function adjustForMobileScreens() {
+  if (window.innerWidth <= 768) {
+    // Mobile-specific adjustments here
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('touchstart', function() {
+        this.classList.add('touch-active');
+      }, {passive: true});
+      
+      link.addEventListener('touchend', function() {
+        this.classList.remove('touch-active');
+      }, {passive: true});
+    });
+  }
+}
 
 // Handle navigation between sections
 function setupNavigation() {
@@ -92,6 +114,14 @@ function switchToSection(sectionId) {
     
     // Fade in the target section
     targetSectionElement.style.opacity = '1';
+    
+    // Scroll to top of the new section on mobile
+    if (window.innerWidth <= 768) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
     
     // Update state
     state.currentSection = sectionId;
@@ -194,3 +224,9 @@ window.addEventListener('load', handleURLHash);
 
 // Listen for hash changes
 window.addEventListener('hashchange', handleURLHash);
+
+// Fix for mobile scrolling issue
+window.addEventListener('load', function() {
+  document.body.style.minHeight = '100vh';
+  document.querySelector('.content').style.minHeight = 'auto';
+});
