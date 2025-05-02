@@ -98,6 +98,7 @@ function switchToSection(sectionId) {
   
   // Fade out current section
   currentSectionElement.style.opacity = '0';
+  currentSectionElement.style.transform = 'translateY(20px)';
   
   // Wait for fade out before showing new section
   setTimeout(() => {
@@ -107,6 +108,7 @@ function switchToSection(sectionId) {
     // Show target section but with opacity 0
     targetSectionElement.classList.add('active');
     targetSectionElement.style.opacity = '0';
+    targetSectionElement.style.transform = 'translateY(20px)';
     
     // Force browser to recognize the change
     // This prevents layout thrashing
@@ -114,6 +116,7 @@ function switchToSection(sectionId) {
     
     // Fade in the target section
     targetSectionElement.style.opacity = '1';
+    targetSectionElement.style.transform = 'translateY(0)';
     
     // Scroll to top of the new section on mobile
     if (window.innerWidth <= 768) {
