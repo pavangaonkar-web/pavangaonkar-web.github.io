@@ -90,12 +90,14 @@ nav ul li {
     display: none;
     width: 100%;
     opacity: 0;
-    transition: opacity 0.4s ease;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
 .section.active {
     display: block;
     opacity: 1;
+    transform: translateY(0);
 }
 
 h2 {
@@ -159,6 +161,7 @@ h2 {
 /* CV section styles */
 .cv-container {
     margin-bottom: 2rem;
+    width: 100%;
 }
 
 .cv-actions {
@@ -214,6 +217,7 @@ h2 {
     height: 600px;
     position: relative;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 100%;
 }
 
 .cv-loading {
@@ -442,12 +446,13 @@ footer {
     .about-container {
         flex-direction: column;
         align-items: center;
+        gap: 0.5rem;
     }
     
     .profile-img-container {
         flex: 0 0 auto;
         width: 220px;
-        margin-bottom: 1.5rem;
+        margin-bottom: 0.75rem;
     }
     
     .about-text {
@@ -480,6 +485,19 @@ footer {
     .cv-preview {
         height: 400px;
     }
+    
+    .contact-item {
+        flex-direction: row;
+        text-align: left;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+    
+    .contact-item p {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -510,8 +528,10 @@ footer {
     }
     
     .contact-item {
-        flex-direction: column;
-        text-align: center;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        text-align: left;
     }
     
     .cv-preview {
