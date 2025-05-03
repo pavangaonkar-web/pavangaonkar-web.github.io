@@ -1,4 +1,4 @@
-// DOM Elements  
+// DOM Elements   
 const navLinks = document.querySelectorAll('.nav-link');
 const sections = document.querySelectorAll('.section');
 const revealTexts = document.querySelectorAll('.reveal-text');
