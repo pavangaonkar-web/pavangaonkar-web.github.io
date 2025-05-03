@@ -161,52 +161,6 @@ function revealAboutText() {
   });
 }
 
-// Set up CV section functionality
-function setupCVSection() {
-  if (!cvIframe) return;
-  
-  // Handle CV iframe loading
-  cvIframe.addEventListener('load', () => {
-    if (cvLoading) {
-      // Hide loading spinner when iframe is loaded
-      cvLoading.style.opacity = '0';
-      setTimeout(() => {
-        cvLoading.style.display = 'none';
-      }, 300);
-    }
-  });
-  
-  // Handle iframe errors
-  cvIframe.addEventListener('error', () => {
-    handleCVLoadError();
-  });
-  
-  // Set a timeout in case the PDF doesn't load
-  setTimeout(() => {
-    if (cvLoading && cvLoading.style.display !== 'none') {
-      handleCVLoadError();
-    }
-  }, 5000);
-}
-
-// Handle CV loading errors
-function handleCVLoadError() {
-  if (cvLoading) {
-    cvLoading.style.display = 'none';
-  }
-  
-  // Show fallback message
-  const cvFallback = document.querySelector('.cv-fallback');
-  if (cvFallback) {
-    cvFallback.style.display = 'flex';
-  }
-  
-  // Hide iframe
-  const cvFrame = document.querySelector('.cv-frame');
-  if (cvFrame) {
-    cvFrame.style.display = 'none';
-  }
-}
 
 // Support for hash-based navigation
 function handleURLHash() {
@@ -221,7 +175,74 @@ function handleURLHash() {
     }
   }
 }
+// Enhanced CV section functionality
+function setupCVSection() {
+  if (!cvIframe) return;
+  
+  // Handle CV iframe loading
+  cvIframe.addEventListener('load', () => {
+    if (cvLoading) {
+      // Hide loading spinner with smooth transition
+      cvLoading.style.opacity = '0';
+      setTimeout(() => {
+        cvLoading.style.display = 'none';
+      }, 300);
+    }
+    
+    // Add a class to indicate successful loading
+    document.querySelector('.cv-frame').classList.add('loaded');
+  });
+  
+  // Handle iframe errors
+  cvIframe.addEventListener('error', handleCVLoadError);
+  
+  // Set a timeout in case the PDF doesn't load
+  setTimeout(() => {
+    if (cvLoading && getComputedStyle(cvLoading).display !== 'none') {
+      handleCVLoadError();
+    }
+  }, 6000); // Increased timeout for slower connections
+  
+  // Improve mobile experience
+  if (window.innerWidth <= 768) {
+    const cvMobileMessage = document.querySelector('.cv-mobile-message');
+    if (cvMobileMessage) {
+      cvMobileMessage.innerHTML = '<strong>Tip:</strong> For the best viewing experience on mobile devices, please download the CV or open in a new tab.';
+    }
+  }
+}
 
+// Improved CV loading error handling
+function handleCVLoadError() {
+  if (cvLoading) {
+    cvLoading.style.opacity = '0';
+    setTimeout(() => {
+      cvLoading.style.display = 'none';
+    }, 300);
+  }
+  
+  // Show fallback message with more helpful content
+  const cvFallback = document.querySelector('.cv-fallback');
+  if (cvFallback) {
+    cvFallback.style.display = 'flex';
+    cvFallback.innerHTML = `
+      <div class="cv-fallback-icon" aria-hidden="true">📄</div>
+      <h3>CV Preview Unavailable</h3>
+      <p>The CV preview could not be loaded at this time.</p>
+      <p>Please try downloading the CV or viewing it in a new tab.</p>
+      <div style="margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+        <a href="pavan_cv.pdf" class="btn btn-primary" download>Download CV</a>
+        <a href="pavan_cv.pdf" class="btn btn-secondary" target="_blank">View in New Tab</a>
+      </div>
+    `;
+  }
+  
+  // Hide iframe container
+  const cvFrame = document.querySelector('.cv-frame');
+  if (cvFrame) {
+    cvFrame.style.display = 'none';
+  }
+}
 // Check for URL hash on page load
 window.addEventListener('load', handleURLHash);
 
