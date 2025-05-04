@@ -33,9 +33,28 @@ document.addEventListener('DOMContentLoaded', () => {
   // Check screen size and adjust as needed
   adjustForMobileScreens();
   
+  // Setup section animations
+  setupSectionAnimations();
+  
+  // Initialize AOS library
+  initAOS();
+  
   // Listen for window resize events
   window.addEventListener('resize', adjustForMobileScreens);
 });
+
+// Initialize AOS (Animate On Scroll) library
+function initAOS() {
+  // Check if AOS is loaded
+  if (typeof AOS !== 'undefined') {
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true,
+      mirror: false
+    });
+  }
+}
 
 // Handle mobile-specific adjustments
 function adjustForMobileScreens() {
@@ -67,27 +86,32 @@ function setupNavigation() {
         return;
       }
       
-      // Update active link
+      // Update active link with animated underline effect
       updateActiveNavLink(sectionId);
       
-      // Show the selected section with smooth transition
+      // Show the selected section with enhanced smooth transition
       switchToSection(sectionId);
     });
   });
 }
 
-// Update active navigation link
+// Update active navigation link with animated underline
 function updateActiveNavLink(sectionId) {
   navLinks.forEach(link => {
     if (link.getAttribute('data-section') === sectionId) {
       link.classList.add('active');
+      // Add pulse animation to active link
+      link.classList.add('pulse-animation');
+      setTimeout(() => {
+        link.classList.remove('pulse-animation');
+      }, 500);
     } else {
       link.classList.remove('active');
     }
   });
 }
 
-// Handle section switching with smooth transitions
+// Handle section switching with enhanced smooth transitions
 function switchToSection(sectionId) {
   // Set transitioning flag to prevent rapid clicking
   state.isTransitioning = true;
@@ -96,24 +120,29 @@ function switchToSection(sectionId) {
   const currentSectionElement = document.getElementById(state.currentSection);
   const targetSectionElement = document.getElementById(sectionId);
   
-  // Fade out current section
-  currentSectionElement.style.opacity = '0';
+  // Add slide-out class to current section
+  currentSectionElement.classList.add('slide-out');
   
-  // Wait for fade out before showing new section
+  // Wait for slide out before showing new section
   setTimeout(() => {
     // Hide current section
     currentSectionElement.classList.remove('active');
+    currentSectionElement.classList.remove('slide-out');
     
-    // Show target section but with opacity 0
+    // Show target section but with initial state for animation
     targetSectionElement.classList.add('active');
-    targetSectionElement.style.opacity = '0';
+    targetSectionElement.classList.add('slide-in');
     
     // Force browser to recognize the change
-    // This prevents layout thrashing
     void targetSectionElement.offsetWidth;
     
-    // Fade in the target section
-    targetSectionElement.style.opacity = '1';
+    // Trigger section-specific animations
+    animateSection(sectionId);
+    
+    // Remove slide-in class after animation completes
+    setTimeout(() => {
+      targetSectionElement.classList.remove('slide-in');
+    }, 500);
     
     // Scroll to top of the new section on mobile
     if (window.innerWidth <= 768) {
@@ -138,39 +167,136 @@ function switchToSection(sectionId) {
     // Reset transition flag after animation completes
     setTimeout(() => {
       state.isTransitioning = false;
-    }, 400); // Match the CSS transition time
+    }, 600); // Match the CSS transition time
     
   }, 300); // Slightly shorter than the CSS transition time
 }
 
+// Setup initial animations for section elements
+function setupSectionAnimations() {
+  // Add animation classes to elements
+  const projectCards = document.querySelectorAll('.project-card');
+  projectCards.forEach((card, index) => {
+    card.classList.add('animate-on-enter');
+    card.style.animationDelay = `${index * 0.1}s`;
+  });
+  
+  const blogCards = document.querySelectorAll('.blog-card');
+  blogCards.forEach((card, index) => {
+    card.classList.add('animate-on-enter');
+    card.style.animationDelay = `${index * 0.1}s`;
+  });
+  
+  const contactItems = document.querySelectorAll('.contact-item');
+  contactItems.forEach((item, index) => {
+    item.classList.add('animate-on-enter');
+    item.style.animationDelay = `${index * 0.1}s`;
+  });
+}
+
+// Trigger animations specific to each section
+function animateSection(sectionId) {
+  const section = document.getElementById(sectionId);
+  
+  // Reset animations
+  section.querySelectorAll('.animate-on-enter').forEach(el => {
+    el.classList.remove('animated');
+    void el.offsetWidth; // Force reflow
+    el.classList.add('animated');
+  });
+  
+  // Section-specific animations
+  switch(sectionId) {
+    case 'about':
+      // Handle profile image animation
+      const profileImg = section.querySelector('.profile-img-container');
+      if (profileImg) {
+        profileImg.classList.add('bounce-in');
+        setTimeout(() => {
+          profileImg.classList.remove('bounce-in');
+        }, 1000);
+      }
+      // Reveal text paragraphs with staggered timing
+      if (!state.visitedSections.has('about')) {
+        revealAboutText();
+      }
+      break;
+      
+    case 'cv':
+      // Animate CV buttons
+      const cvButtons = section.querySelectorAll('.btn');
+      cvButtons.forEach((btn, index) => {
+        btn.classList.add('pop-in');
+        btn.style.animationDelay = `${index * 0.2}s`;
+        setTimeout(() => {
+          btn.classList.remove('pop-in');
+        }, 1000);
+      });
+      
+      // Enhanced CV preview animation
+      const cvPreview = section.querySelector('.cv-preview');
+      if (cvPreview) {
+        cvPreview.classList.add('fade-scale-in');
+        setTimeout(() => {
+          cvPreview.classList.remove('fade-scale-in');
+        }, 1000);
+      }
+      break;
+      
+    case 'projects':
+    case 'blog':
+      // Cards will animate via their animate-on-enter class
+      break;
+      
+    case 'contact':
+      // Contact info items will animate via their animate-on-enter class
+      // Add special animation for LinkedIn button
+      const linkedinBtn = section.querySelector('.linkedin-btn');
+      if (linkedinBtn) {
+        linkedinBtn.classList.add('pulse-animation');
+        setTimeout(() => {
+          linkedinBtn.classList.remove('pulse-animation');
+        }, 1000);
+      }
+      break;
+  }
+}
+
 // Handle text reveal animation for the about section
 function revealAboutText() {
-  // Exit if about section has already been visited
+  // Exit if about section has already been visited and animation completed
   if (state.visitedSections.has('about') && document.querySelector('.reveal-text.visible')) {
     return;
   }
   
-  // Trigger sequential animation for each paragraph
+  // Trigger enhanced sequential animation for each paragraph
   revealTexts.forEach((text, index) => {
     setTimeout(() => {
       text.classList.add('visible');
+      text.classList.add('highlight-reveal');
+      setTimeout(() => {
+        text.classList.remove('highlight-reveal');
+      }, 800);
     }, 200 * index); // Stagger the animations
   });
 }
 
-// Set up CV section functionality
+// Set up CV section functionality with enhanced loading animation
 function setupCVSection() {
   if (!cvIframe) return;
   
   // Handle CV iframe loading
   cvIframe.addEventListener('load', () => {
     if (cvLoading) {
-      // Hide loading spinner when iframe is loaded
-      cvLoading.style.opacity = '0';
+      // Enhanced loading animation
+      cvLoading.classList.add('fade-out');
       setTimeout(() => {
         cvLoading.style.display = 'none';
-      }, 300);
+      }, 500);
     }
+    
+    // Add entrance animation to CV iframe
+    cvIframe.classList.add('fade-in');
   });
   
   // Handle iframe errors
@@ -184,18 +310,37 @@ function setupCVSection() {
       handleCVLoadError();
     }
   }, 5000);
+  
+  // Add hover effect to CV frame
+  const cvFrame = document.querySelector('.cv-frame');
+  if (cvFrame) {
+    cvFrame.addEventListener('mouseenter', () => {
+      cvFrame.classList.add('hover-glow');
+    });
+    
+    cvFrame.addEventListener('mouseleave', () => {
+      cvFrame.classList.remove('hover-glow');
+    });
+  }
 }
 
-// Handle CV loading errors
+// Handle CV loading errors with enhanced fallback animation
 function handleCVLoadError() {
   if (cvLoading) {
-    cvLoading.style.display = 'none';
+    cvLoading.classList.add('fade-out');
+    setTimeout(() => {
+      cvLoading.style.display = 'none';
+    }, 500);
   }
   
-  // Show fallback message
+  // Show fallback message with animation
   const cvFallback = document.querySelector('.cv-fallback');
   if (cvFallback) {
     cvFallback.style.display = 'flex';
+    cvFallback.classList.add('fade-scale-in');
+    setTimeout(() => {
+      cvFallback.classList.remove('fade-scale-in');
+    }, 1000);
   }
   
   // Hide iframe
@@ -204,6 +349,19 @@ function handleCVLoadError() {
     cvFrame.style.display = 'none';
   }
 }
+
+// Add mouse movement parallax effect to profile image
+document.addEventListener('mousemove', (e) => {
+  if (state.currentSection === 'about') {
+    const profileImg = document.querySelector('.profile-img-container img');
+    if (profileImg && window.innerWidth > 768) {
+      const moveX = (e.clientX - window.innerWidth / 2) / 50;
+      const moveY = (e.clientY - window.innerHeight / 2) / 50;
+      
+      profileImg.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.02)`;
+    }
+  }
+});
 
 // Support for hash-based navigation
 function handleURLHash() {
