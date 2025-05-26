@@ -413,6 +413,62 @@ footer {
     padding: 0 1rem;
 }
 
+/* Make CV section full width on larger screens */
+@media (min-width: 769px) {
+    .cv-container {
+        /* Break out of the main content container constraints */
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        width: 100vw;
+        padding: 0 2rem;
+        max-width: none;
+    }
+    
+    .cv-preview {
+        background-color: var(--secondary-color);
+        border-radius: 10px;
+        overflow: hidden;
+        height: 80vh; /* Use viewport height for better scaling */
+        min-height: 600px;
+        max-height: 900px;
+        position: relative;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        max-width: 1400px; /* Limit maximum width */
+        margin: 0 auto; /* Center the preview */
+    }
+    
+    /* Keep actions centered and normal width */
+    .cv-actions {
+        max-width: 1200px;
+        margin: 0 auto 1.5rem auto;
+        display: flex;
+        gap: 1rem;
+    }
+}
+
+/* For very large screens, provide even more width */
+@media (min-width: 1200px) {
+    .cv-container {
+        padding: 0 4rem;
+    }
+    
+    .cv-preview {
+        max-width: 1600px;
+        height: 85vh;
+    }
+}
+
+/* For extra large screens */
+@media (min-width: 1600px) {
+    .cv-preview {
+        max-width: 1800px;
+        height: 90vh;
+    }
+}
+
 /* Media Queries */
 @media (max-width: 768px) {
     .header-content {
