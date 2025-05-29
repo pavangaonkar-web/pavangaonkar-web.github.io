@@ -1,3 +1,4 @@
+
 /* Dark theme with white text */  
 :root {
     --background-color: #0a0a0a;
@@ -156,7 +157,7 @@ h2 {
     }
 }
 
-/* CV section styles */
+/* CV section styles - UPDATED FOR BETTER WIDTH */
 .cv-container {
     margin-bottom: 2rem;
 }
@@ -214,6 +215,7 @@ h2 {
     height: 600px;
     position: relative;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid #333;
 }
 
 .cv-loading {
@@ -259,10 +261,34 @@ h2 {
     border: none;
     transition: opacity 0.4s ease;
     opacity: 1;
+    transform: scale(1);
+    transform-origin: top left;
+    object-fit: fill;
+    min-width: 100%;
+    min-height: 100%;
 }
 
 .cv-frame iframe.loading {
     opacity: 0.5;
+}
+
+/* Additional fallback styles for PDF display */
+.cv-frame iframe[src$=".pdf"] {
+    width: 100% !important;
+    height: 100% !important;
+    zoom: 1;
+}
+
+.cv-frame embed {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.cv-frame object {
+    width: 100%;
+    height: 100%;
+    border: none;
 }
 
 .cv-fallback {
@@ -413,10 +439,9 @@ footer {
     padding: 0 1rem;
 }
 
-/* Make CV section full width on larger screens */
+/* ENHANCED CV SECTION FOR LARGER SCREENS */
 @media (min-width: 769px) {
     .cv-container {
-        /* Break out of the main content container constraints */
         position: relative;
         left: 50%;
         right: 50%;
@@ -431,16 +456,16 @@ footer {
         background-color: var(--secondary-color);
         border-radius: 10px;
         overflow: hidden;
-        height: 80vh; /* Use viewport height for better scaling */
-        min-height: 600px;
-        max-height: 900px;
+        height: 85vh;
+        min-height: 700px;
+        max-height: 1000px;
         position: relative;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        max-width: 1400px; /* Limit maximum width */
-        margin: 0 auto; /* Center the preview */
+        max-width: 1600px;
+        margin: 0 auto;
+        border: 1px solid #333;
     }
     
-    /* Keep actions centered and normal width */
     .cv-actions {
         max-width: 1200px;
         margin: 0 auto 1.5rem auto;
@@ -449,23 +474,29 @@ footer {
     }
 }
 
-/* For very large screens, provide even more width */
+/* For very large screens */
 @media (min-width: 1200px) {
     .cv-container {
-        padding: 0 4rem;
+        padding: 0 3rem;
     }
     
     .cv-preview {
-        max-width: 1600px;
-        height: 85vh;
+        max-width: 1800px;
+        height: 90vh;
+        min-height: 800px;
     }
 }
 
 /* For extra large screens */
 @media (min-width: 1600px) {
+    .cv-container {
+        padding: 0 2rem;
+    }
+    
     .cv-preview {
-        max-width: 1800px;
+        max-width: 2000px;
         height: 90vh;
+        min-height: 850px;
     }
 }
 
@@ -578,9 +609,8 @@ footer {
         font-size: 2.5rem;
     }
 }
-/* Animation Styles - Add to end of existing styles.css */
 
-/* Section transitions */
+/* Animation Styles */
 .section {
     display: none;
     width: 100%;
@@ -807,20 +837,6 @@ footer {
     box-shadow: 0 0 20px rgba(138, 110, 255, 0.3);
 }
 
-.cv-loading-spinner {
-    width: 50px;
-    height: 50px;
-    border: 5px solid rgba(255, 255, 255, 0.1);
-    border-top-color: var(--accent-color);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
 /* Additional hover effects */
 .project-card, .blog-card {
     transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
