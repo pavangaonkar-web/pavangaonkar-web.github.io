@@ -157,17 +157,15 @@ h2 {
     }
 }
 
-/* CV section styles - UPDATED FOR BETTER WIDTH */
+/* CV section styles - FIXED FOR PDF FILL */
 .cv-container {
     margin-bottom: 2rem;
 }
-
 .cv-actions {
     display: flex;
     gap: 1rem;
     margin-bottom: 1.5rem;
 }
-
 .btn {
     display: inline-flex;
     align-items: center;
@@ -178,36 +176,30 @@ h2 {
     transition: all 0.3s ease;
     cursor: pointer;
 }
-
 .btn-primary {
     background-color: var(--accent-color);
     color: #fff;
 }
-
 .btn-primary:hover {
     background-color: var(--hover-color);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
 .btn-secondary {
     background-color: var(--secondary-color);
     color: var(--text-color);
 }
-
 .btn-secondary:hover {
     background-color: #3a3a3a;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
 .btn-icon {
     width: 18px;
     height: 18px;
     margin-right: 0.5rem;
     fill: currentColor;
 }
-
 .cv-preview {
     background-color: var(--secondary-color);
     border-radius: 10px;
@@ -216,8 +208,10 @@ h2 {
     position: relative;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     border: 1px solid #333;
+    /* Ensure the container is properly sized */
+    display: block;
+    width: 100%;
 }
-
 .cv-loading {
     position: absolute;
     top: 0;
@@ -230,7 +224,6 @@ h2 {
     background-color: var(--secondary-color);
     z-index: 5;
 }
-
 .cv-loading-spinner {
     width: 50px;
     height: 50px;
@@ -239,37 +232,53 @@ h2 {
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
-
 @keyframes spin {
     to {
         transform: rotate(360deg);
     }
 }
-
 .cv-frame {
     display: none;
+    /* Make sure the frame takes full dimensions */
+    width: 100%;
     height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
-
 .cv-frame.active {
     display: block;
 }
-
 .cv-frame iframe {
     width: 100%;
     height: 100%;
     border: none;
     transition: opacity 0.4s ease;
     opacity: 1;
-    transform: scale(1);
-    transform-origin: top left;
-    object-fit: fill;
-    min-width: 100%;
-    min-height: 100%;
+    /* Remove transform scaling that might cause sizing issues */
+    transform: none;
+    /* Ensure iframe fills container completely */
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* Remove object-fit and min-width/height as they don't apply to iframes */
 }
-
 .cv-frame iframe.loading {
     opacity: 0.5;
+}
+
+/* Additional fix for PDF viewers */
+.cv-frame iframe[src*=".pdf"] {
+    /* Force PDF to scale to fit */
+    zoom: 1;
+}
+
+/* Alternative approach - if using embed for PDFs */
+.cv-frame embed,
+.cv-frame object {
+    width: 100%;
+    height: 100%;
+    border: none;
 }
 
 /* Additional fallback styles for PDF display */
