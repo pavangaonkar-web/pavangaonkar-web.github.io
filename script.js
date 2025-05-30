@@ -349,20 +349,6 @@ function handleCVLoadError() {
     cvFrame.style.display = 'none';
   }
 }
-
-// Add mouse movement parallax effect to profile image
-document.addEventListener('mousemove', (e) => {
-  if (state.currentSection === 'about') {
-    const profileImg = document.querySelector('.profile-img-container img');
-    if (profileImg && window.innerWidth > 768) {
-      const moveX = (e.clientX - window.innerWidth / 2) / 50;
-      const moveY = (e.clientY - window.innerHeight / 2) / 50;
-      
-      profileImg.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.02)`;
-    }
-  }
-});
-
 // Support for hash-based navigation
 function handleURLHash() {
   const hash = window.location.hash;
