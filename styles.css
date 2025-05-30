@@ -104,6 +104,8 @@ h2 {
     position: relative;
     display: inline-block;
     color: var(--accent-color);
+    text-align: center;
+    width: 100%;
 }
 
 /* About section styles */
@@ -114,25 +116,22 @@ h2 {
     margin-bottom: 2rem;
 }
 
-.profile-img-container {
-    flex: 0 0 250px;
-    transition: transform 0.4s ease;
-}
 
 .profile-img-container img {
     width: 100%;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-    transition: transform 0.3s ease;
-}
-
-.profile-img-container img:hover {
-    transform: scale(1.02);
+    /* Removed hover transform effect */
 }
 
 .about-text {
     flex: 1;
 }
+.profile-img-container {
+    flex: 0 0 250px;
+    /* Removed the transform transition to eliminate movement effect */
+}
+
 
 /* Text reveal animations */
 .text-reveal-container {
@@ -156,15 +155,17 @@ h2 {
     }
 }
 
-/* IMPROVED CV SECTION STYLES FOR BETTER PDF LOADING */
+/* SIMPLIFIED CV SECTION STYLES - REMOVED CONTAINER */
 .cv-container {
+    text-align: center;
     margin-bottom: 2rem;
 }
 
 .cv-actions {
     display: flex;
     gap: 1rem;
-    margin-bottom: 1.5rem;
+    justify-content: center;
+    margin-top: 2rem;
 }
 
 .btn {
@@ -205,149 +206,6 @@ h2 {
     height: 18px;
     margin-right: 0.5rem;
     fill: currentColor;
-}
-
-/* FIXED PDF PREVIEW CONTAINER */
-.cv-preview {
-    background-color: var(--secondary-color);
-    border-radius: 10px;
-    overflow: hidden;
-    height: 600px;
-    position: relative;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    border: 1px solid #333;
-    width: 100%;
-}
-
-.cv-loading {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--secondary-color);
-    z-index: 10;
-    transition: opacity 0.3s ease;
-}
-
-.cv-loading.hidden {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.cv-loading-spinner {
-    width: 50px;
-    height: 50px;
-    border: 5px solid rgba(255, 255, 255, 0.1);
-    border-top-color: var(--accent-color);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin-bottom: 1rem;
-}
-
-.cv-loading-text {
-    color: var(--text-color);
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-/* IMPROVED PDF FRAME HANDLING */
-.cv-frame {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.cv-frame.active {
-    opacity: 1;
-}
-
-.cv-frame iframe,
-.cv-frame embed,
-.cv-frame object {
-    width: 100%;
-    height: 100%;
-    border: none;
-    background-color: #fff;
-}
-
-/* PDF-specific iframe handling */
-.cv-frame iframe[src*=".pdf"] {
-    width: 100% !important;
-    height: 100% !important;
-}
-
-/* Error fallback */
-.cv-error {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 2rem;
-    background-color: var(--secondary-color);
-}
-
-.cv-error.show {
-    display: flex;
-}
-
-.cv-error-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    color: #ff6b6b;
-}
-
-.cv-error-message {
-    color: var(--text-color);
-    margin-bottom: 1rem;
-}
-
-.cv-error-subtitle {
-    color: #888;
-    font-size: 0.9rem;
-}
-
-/* Alternative PDF viewer styles */
-.cv-alternative {
-    display: none;
-    padding: 2rem;
-    text-align: center;
-    background-color: var(--secondary-color);
-    border-radius: 10px;
-    margin-top: 1rem;
-}
-
-.cv-alternative.show {
-    display: block;
-}
-
-.cv-mobile-message {
-    display: none;
-    margin-bottom: 1rem;
-    padding: 0.75rem;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 5px;
-    text-align: center;
 }
 
 /* Projects section styles */
@@ -474,67 +332,6 @@ footer {
     padding: 0 1rem;
 }
 
-/* ENHANCED CV SECTION FOR LARGER SCREENS */
-@media (min-width: 769px) {
-    .cv-container {
-        position: relative;
-        left: 50%;
-        right: 50%;
-        margin-left: -50vw;
-        margin-right: -50vw;
-        width: 100vw;
-        padding: 0 2rem;
-        max-width: none;
-    }
-    
-    .cv-preview {
-        background-color: var(--secondary-color);
-        border-radius: 10px;
-        overflow: hidden;
-        height: 85vh;
-        min-height: 700px;
-        max-height: 1000px;
-        position: relative;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        max-width: 1600px;
-        margin: 0 auto;
-        border: 1px solid #333;
-    }
-    
-    .cv-actions {
-        max-width: 1200px;
-        margin: 0 auto 1.5rem auto;
-        display: flex;
-        gap: 1rem;
-    }
-}
-
-/* For very large screens */
-@media (min-width: 1200px) {
-    .cv-container {
-        padding: 0 3rem;
-    }
-    
-    .cv-preview {
-        max-width: 1800px;
-        height: 90vh;
-        min-height: 800px;
-    }
-}
-
-/* For extra large screens */
-@media (min-width: 1600px) {
-    .cv-container {
-        padding: 0 2rem;
-    }
-    
-    .cv-preview {
-        max-width: 2000px;
-        height: 90vh;
-        min-height: 850px;
-    }
-}
-
 /* Media Queries */
 @media (max-width: 768px) {
     .header-content {
@@ -576,16 +373,14 @@ footer {
         text-align: center;
     }
     
-    .cv-mobile-message {
-        display: block;
-    }
-    
     .cv-actions {
         flex-direction: column;
+        align-items: center;
     }
     
     .btn {
         width: 100%;
+        max-width: 250px;
         justify-content: center;
     }
     
@@ -597,10 +392,6 @@ footer {
     .content {
         margin: 120px auto 1rem;
         padding: 1rem;
-    }
-    
-    .cv-preview {
-        height: 400px;
     }
 }
 
@@ -634,10 +425,6 @@ footer {
     .contact-item {
         flex-direction: column;
         text-align: center;
-    }
-    
-    .cv-preview {
-        height: 300px;
     }
     
     .empty-icon {
@@ -861,15 +648,6 @@ footer {
 .animate-on-enter.animated {
     opacity: 1;
     transform: translateY(0);
-}
-
-/* CV section specific animations */
-.cv-frame {
-    transition: all 0.3s ease;
-}
-
-.cv-frame.hover-glow {
-    box-shadow: 0 0 20px rgba(138, 110, 255, 0.3);
 }
 
 /* Additional hover effects */
