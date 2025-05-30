@@ -1,390 +1,137 @@
-// DOM Elements 
-const navLinks = document.querySelectorAll('.nav-link');
-const sections = document.querySelectorAll('.section');
-const revealTexts = document.querySelectorAll('.reveal-text');
-const cvIframe = document.getElementById('cv-iframe');
-const cvLoading = document.getElementById('cv-loading');
-const currentYearElement = document.getElementById('current-year');
+<!DOCTYPE html>  
+<html lang="en">  
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pavan Gaonkar - Physics & Mathematics">
+    <title>Pavan Gaonkar | Physics & Mathematics</title>
+    <link rel="icon" type="image/png" href="favicon.ico">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="styles.css">
+</head> 
+<body> 
+    <header>
+        <div class="header-content">
+            <h1>Pavan Gaonkar</h1>
+            <nav aria-label="Main navigation">
+                <ul>
+                    <li><a href="#about" class="nav-link active" data-section="about">About</a></li>
+                    <li><a href="#cv" class="nav-link" data-section="cv">CV</a></li>
+                    <li><a href="#projects" class="nav-link" data-section="projects">Projects</a></li>
+                    <li><a href="#blog" class="nav-link" data-section="blog">Blog</a></li>
+                    <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-// State management
-const state = {
-  // Track which sections have been viewed (to prevent re-animation)
-  visitedSections: new Set(['about']), // Start with about as visited
-  // Track current active section  
-  currentSection: 'about',
-  // Flag to prevent rapid section switching
-  isTransitioning: false
-};
+    <main class="content">
+        <section id="about" class="section active">
+            <div class="about-container">
+                <div class="profile-img-container">
+                    <img src="profile.jpg" alt="Pavan Gaonkar" loading="lazy" onerror="this.src='/api/placeholder/400/320'">
+                </div>
+                <div class="about-text">
+                    <h2>About Me</h2>
+                    <div class="text-reveal-container">
+                        <p class="reveal-text">Hey, I'm Pavan Gaonkar! I am very much fascinated by how the universe works in the most fundamental way. As a result I really like quantum mechanics and General theory of relativity. Although I haven't studied GTR yet, I plan to dive into it soon.</p>
+                        <p class="reveal-text">Recently, I've also started developing a fascination for pure mathematics. What truly amazes me is how abstract mathematical concepts—ones that seem completely disconnected from reality, like linear algebra and differential geometry—end up having profound applications in physics. Take linear algebra, for instance. If you read Linear Algebra Done Right, you might wonder how such abstract ideas could ever be useful. But once you encounter quantum mechanics, you realize that without linear algebra, constructing quantum theory would be nearly impossible.</p>
+                        <p class="reveal-text">I recently completed my undergraduate studies at Karnataka University, Dharwad, India. I love discussing deep ideas about the universe.</p>
+                        <p class="reveal-text">Beyond physics, I enjoy reading S. L. Bhyrappa's novels, which offer profound insights into Indian philosophy and life. Stargazing has been a long-standing passion of mine, and I love spending time identifying stars and constellations.</p>
+                        <p class="reveal-text">My long-term goal is to contribute original ideas to physics and possibly pursue a career in theoretical physics or academia.</p>
+                        <p class="reveal-text">If you share a passion for physics, mathematics, philosophy, or the mysteries of the cosmos, I'd love to connect and exchange ideas!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-// Initialize the page
-document.addEventListener('DOMContentLoaded', () => {
-  // Update copyright year
-  currentYearElement.textContent = new Date().getFullYear();
-  
-  // Set up navigation click listeners
-  setupNavigation();
-  
-  // Initialize CV section
-  setupCVSection();
-  
-  // Start the initial text reveal animation for the about section
-  revealAboutText();
-  
-  // Check screen size and adjust as needed
-  adjustForMobileScreens();
-  
-  // Setup section animations
-  setupSectionAnimations();
-  
-  // Initialize AOS library
-  initAOS();
-  
-  // Listen for window resize events
-  window.addEventListener('resize', adjustForMobileScreens);
-});
+        <section id="cv" class="section">
+            <div class="cv-container">
+                <h2>Curriculum Vitae</h2>
+                <div class="cv-actions">
+                    <a href="pavan_cv.pdf" class="btn btn-primary" download>
+                        <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"/>
+                        </svg>
+                        Download CV
+                    </a>
+                    <a href="pavan_cv.pdf" class="btn btn-secondary" target="_blank">
+                        <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
+                        </svg>
+                        View in New Tab
+                    </a>
+                </div>
+            </div>
+        </section>
 
-// Initialize AOS (Animate On Scroll) library
-function initAOS() {
-  // Check if AOS is loaded
-  if (typeof AOS !== 'undefined') {
-    AOS.init({
-      duration: 800,
-      easing: 'ease-in-out',
-      once: true,
-      mirror: false
-    });
-  }
-}
+        <section id="projects" class="section">
+            <div class="projects-grid">
+                <h2>Projects</h2>
+                <div class="projects-container">
+                    <div class="project-card empty-state">
+                        <div class="empty-icon" aria-hidden="true">⚛️</div>
+                        <h3>Exciting Projects Coming Soon</h3>
+                        <p>I'm currently working on some fascinating physics and mathematics projects.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-// Handle mobile-specific adjustments
-function adjustForMobileScreens() {
-  if (window.innerWidth <= 768) {
-    // Mobile-specific adjustments here
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('touchstart', function() {
-        this.classList.add('touch-active');
-      }, {passive: true});
-      
-      link.addEventListener('touchend', function() {
-        this.classList.remove('touch-active');
-      }, {passive: true});
-    });
-  }
-}
+        <section id="blog" class="section">
+            <div class="blog-posts">
+                <h2>Blog</h2>
+                <div class="blog-container">
+                    <div class="blog-card empty-state">
+                        <div class="empty-icon" aria-hidden="true">✒️</div>
+                        <h3>Thought-Provoking Articles Coming</h3>
+                        <p>I'm working on several articles about physics, mathematics, and philosophy.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-// Handle navigation between sections
-function setupNavigation() {
-  navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      
-      // Get section ID from data attribute
-      const sectionId = link.getAttribute('data-section');
-      
-      // Don't do anything if we're already on this section or transitioning
-      if (sectionId === state.currentSection || state.isTransitioning) {
-        return;
-      }
-      
-      // Update active link with animated underline effect
-      updateActiveNavLink(sectionId);
-      
-      // Show the selected section with enhanced smooth transition
-      switchToSection(sectionId);
-    });
-  });
-}
+        <section id="contact" class="section">
+            <div class="contact-container">
+                <h2>Get In Touch</h2>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <svg class="contact-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z"/>
+                        </svg>
+                        <p><strong>Email:</strong> <a href="mailto:pavangaonkar.phy@gmail.com">pavangaonkar.phy@gmail.com</a></p>
+                    </div>
+                    <div class="contact-item">
+                        <svg class="contact-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M18.5 18.5V13.2A3.26 3.26 0 0 0 15.24 9.94C14.39 9.94 13.4 10.46 12.92 11.24V10.13H10.13V18.5H12.92V13.57C12.92 12.8 13.54 12.17 14.31 12.17A1.4 1.4 0 0 1 15.71 13.57V18.5H18.5M6.88 8.56A1.68 1.68 0 0 0 8.56 6.88C8.56 5.95 7.81 5.19 6.88 5.19A1.69 1.69 0 0 0 5.19 6.88C5.19 7.81 5.95 8.56 6.88 8.56M8.27 18.5V10.13H5.5V18.5H8.27Z"/>
+                        </svg>
+                        <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/pavan-gaonkar-07a0972bb/" target="_blank" rel="noopener">Pavan Gaonkar</a></p>
+                    </div>
+                    <div class="contact-item">
+                        <svg class="contact-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 11.5A2.5 2.5 0 0 1 14.5 14A2.5 2.5 0 0 1 12 16.5A2.5 2.5 0 0 1 9.5 14A2.5 2.5 0 0 1 12 11.5M12 2A7 7 0 0 0 5 9C5 14.25 12 22 12 22S19 14.25 19 9A7 7 0 0 0 12 2Z"/>
+                        </svg>
+                        <p><strong>Location:</strong> Karnataka, India</p>
+                    </div>
+                    <div class="contact-btn-wrapper">
+                        <a href="https://www.linkedin.com/in/pavan-gaonkar-07a0972bb/" class="btn btn-primary linkedin-btn" target="_blank" rel="noopener">
+                            <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M18.5 18.5V13.2A3.26 3.26 0 0 0 15.24 9.94C14.39 9.94 13.4 10.46 12.92 11.24V10.13H10.13V18.5H12.92V13.57C12.92 12.8 13.54 12.17 14.31 12.17A1.4 1.4 0 0 1 15.71 13.57V18.5H18.5M6.88 8.56A1.68 1.68 0 0 0 8.56 6.88C8.56 5.95 7.81 5.19 6.88 5.19A1.69 1.69 0 0 0 5.19 6.88C5.19 7.81 5.95 8.56 6.88 8.56M8.27 18.5V10.13H5.5V18.5H8.27Z"/>
+                            </svg>
+                            Connect on LinkedIn
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-// Update active navigation link with animated underline
-function updateActiveNavLink(sectionId) {
-  navLinks.forEach(link => {
-    if (link.getAttribute('data-section') === sectionId) {
-      link.classList.add('active');
-      // Add pulse animation to active link
-      link.classList.add('pulse-animation');
-      setTimeout(() => {
-        link.classList.remove('pulse-animation');
-      }, 500);
-    } else {
-      link.classList.remove('active');
-    }
-  });
-}
+    <footer>
+        <div class="footer-content">
+            <p>&copy; <span id="current-year">2025</span> Pavan Gaonkar</p>
+        </div>
+    </footer>
 
-// Handle section switching with enhanced smooth transitions
-function switchToSection(sectionId) {
-  // Set transitioning flag to prevent rapid clicking
-  state.isTransitioning = true;
-  
-  // Get current and target sections
-  const currentSectionElement = document.getElementById(state.currentSection);
-  const targetSectionElement = document.getElementById(sectionId);
-  
-  // Add slide-out class to current section
-  currentSectionElement.classList.add('slide-out');
-  
-  // Wait for slide out before showing new section
-  setTimeout(() => {
-    // Hide current section
-    currentSectionElement.classList.remove('active');
-    currentSectionElement.classList.remove('slide-out');
-    
-    // Show target section but with initial state for animation
-    targetSectionElement.classList.add('active');
-    targetSectionElement.classList.add('slide-in');
-    
-    // Force browser to recognize the change
-    void targetSectionElement.offsetWidth;
-    
-    // Trigger section-specific animations
-    animateSection(sectionId);
-    
-    // Remove slide-in class after animation completes
-    setTimeout(() => {
-      targetSectionElement.classList.remove('slide-in');
-    }, 500);
-    
-    // Scroll to top of the new section on mobile
-    if (window.innerWidth <= 768) {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    }
-    
-    // Update state
-    state.currentSection = sectionId;
-    
-    // If this is the first time viewing this section and it's the about section,
-    // trigger the reveal animation
-    if (!state.visitedSections.has(sectionId) && sectionId === 'about') {
-      revealAboutText();
-    }
-    
-    // Add this section to visited sections
-    state.visitedSections.add(sectionId);
-    
-    // Reset transition flag after animation completes
-    setTimeout(() => {
-      state.isTransitioning = false;
-    }, 600); // Match the CSS transition time
-    
-  }, 300); // Slightly shorter than the CSS transition time
-}
-
-// Setup initial animations for section elements
-function setupSectionAnimations() {
-  // Add animation classes to elements
-  const projectCards = document.querySelectorAll('.project-card');
-  projectCards.forEach((card, index) => {
-    card.classList.add('animate-on-enter');
-    card.style.animationDelay = `${index * 0.1}s`;
-  });
-  
-  const blogCards = document.querySelectorAll('.blog-card');
-  blogCards.forEach((card, index) => {
-    card.classList.add('animate-on-enter');
-    card.style.animationDelay = `${index * 0.1}s`;
-  });
-  
-  const contactItems = document.querySelectorAll('.contact-item');
-  contactItems.forEach((item, index) => {
-    item.classList.add('animate-on-enter');
-    item.style.animationDelay = `${index * 0.1}s`;
-  });
-}
-
-// Trigger animations specific to each section
-function animateSection(sectionId) {
-  const section = document.getElementById(sectionId);
-  
-  // Reset animations
-  section.querySelectorAll('.animate-on-enter').forEach(el => {
-    el.classList.remove('animated');
-    void el.offsetWidth; // Force reflow
-    el.classList.add('animated');
-  });
-  
-  // Section-specific animations
-  switch(sectionId) {
-    case 'about':
-      // Handle profile image animation
-      const profileImg = section.querySelector('.profile-img-container');
-      if (profileImg) {
-        profileImg.classList.add('bounce-in');
-        setTimeout(() => {
-          profileImg.classList.remove('bounce-in');
-        }, 1000);
-      }
-      // Reveal text paragraphs with staggered timing
-      if (!state.visitedSections.has('about')) {
-        revealAboutText();
-      }
-      break;
-      
-    case 'cv':
-      // Animate CV buttons
-      const cvButtons = section.querySelectorAll('.btn');
-      cvButtons.forEach((btn, index) => {
-        btn.classList.add('pop-in');
-        btn.style.animationDelay = `${index * 0.2}s`;
-        setTimeout(() => {
-          btn.classList.remove('pop-in');
-        }, 1000);
-      });
-      
-      // Enhanced CV preview animation
-      const cvPreview = section.querySelector('.cv-preview');
-      if (cvPreview) {
-        cvPreview.classList.add('fade-scale-in');
-        setTimeout(() => {
-          cvPreview.classList.remove('fade-scale-in');
-        }, 1000);
-      }
-      break;
-      
-    case 'projects':
-    case 'blog':
-      // Cards will animate via their animate-on-enter class
-      break;
-      
-    case 'contact':
-      // Contact info items will animate via their animate-on-enter class
-      // Add special animation for LinkedIn button
-      const linkedinBtn = section.querySelector('.linkedin-btn');
-      if (linkedinBtn) {
-        linkedinBtn.classList.add('pulse-animation');
-        setTimeout(() => {
-          linkedinBtn.classList.remove('pulse-animation');
-        }, 1000);
-      }
-      break;
-  }
-}
-
-// Handle text reveal animation for the about section
-function revealAboutText() {
-  // Exit if about section has already been visited and animation completed
-  if (state.visitedSections.has('about') && document.querySelector('.reveal-text.visible')) {
-    return;
-  }
-  
-  // Trigger enhanced sequential animation for each paragraph
-  revealTexts.forEach((text, index) => {
-    setTimeout(() => {
-      text.classList.add('visible');
-      text.classList.add('highlight-reveal');
-      setTimeout(() => {
-        text.classList.remove('highlight-reveal');
-      }, 800);
-    }, 200 * index); // Stagger the animations
-  });
-}
-
-// Set up CV section functionality with enhanced loading animation
-function setupCVSection() {
-  if (!cvIframe) return;
-  
-  // Handle CV iframe loading
-  cvIframe.addEventListener('load', () => {
-    if (cvLoading) {
-      // Enhanced loading animation
-      cvLoading.classList.add('fade-out');
-      setTimeout(() => {
-        cvLoading.style.display = 'none';
-      }, 500);
-    }
-    
-    // Add entrance animation to CV iframe
-    cvIframe.classList.add('fade-in');
-  });
-  
-  // Handle iframe errors
-  cvIframe.addEventListener('error', () => {
-    handleCVLoadError();
-  });
-  
-  // Set a timeout in case the PDF doesn't load
-  setTimeout(() => {
-    if (cvLoading && cvLoading.style.display !== 'none') {
-      handleCVLoadError();
-    }
-  }, 5000);
-  
-  // Add hover effect to CV frame
-  const cvFrame = document.querySelector('.cv-frame');
-  if (cvFrame) {
-    cvFrame.addEventListener('mouseenter', () => {
-      cvFrame.classList.add('hover-glow');
-    });
-    
-    cvFrame.addEventListener('mouseleave', () => {
-      cvFrame.classList.remove('hover-glow');
-    });
-  }
-}
-
-// Handle CV loading errors with enhanced fallback animation
-function handleCVLoadError() {
-  if (cvLoading) {
-    cvLoading.classList.add('fade-out');
-    setTimeout(() => {
-      cvLoading.style.display = 'none';
-    }, 500);
-  }
-  
-  // Show fallback message with animation
-  const cvFallback = document.querySelector('.cv-fallback');
-  if (cvFallback) {
-    cvFallback.style.display = 'flex';
-    cvFallback.classList.add('fade-scale-in');
-    setTimeout(() => {
-      cvFallback.classList.remove('fade-scale-in');
-    }, 1000);
-  }
-  
-  // Hide iframe
-  const cvFrame = document.querySelector('.cv-frame');
-  if (cvFrame) {
-    cvFrame.style.display = 'none';
-  }
-}
-
-// Add mouse movement parallax effect to profile image
-document.addEventListener('mousemove', (e) => {
-  if (state.currentSection === 'about') {
-    const profileImg = document.querySelector('.profile-img-container img');
-    if (profileImg && window.innerWidth > 768) {
-      const moveX = (e.clientX - window.innerWidth / 2) / 50;
-      const moveY = (e.clientY - window.innerHeight / 2) / 50;
-      
-      profileImg.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.02)`;
-    }
-  }
-});
-
-// Support for hash-based navigation
-function handleURLHash() {
-  const hash = window.location.hash;
-  if (hash) {
-    const sectionId = hash.substring(1); // Remove the # character
-    const validSections = Array.from(sections).map(section => section.id);
-    
-    if (validSections.includes(sectionId)) {
-      updateActiveNavLink(sectionId);
-      switchToSection(sectionId);
-    }
-  }
-}
-
-// Check for URL hash on page load
-window.addEventListener('load', handleURLHash);
-
-// Listen for hash changes
-window.addEventListener('hashchange', handleURLHash);
-
-// Fix for mobile scrolling issue
-window.addEventListener('load', function() {
-  document.body.style.minHeight = '100vh';
-  document.querySelector('.content').style.minHeight = 'auto';
-});
+    <script src="script.js"></script>
+</body>
+</html>
